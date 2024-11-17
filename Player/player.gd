@@ -24,6 +24,11 @@ var player_speed := 3.0
 @export var jump_gravity := ((-2.0 * jump_height) / (jump_time_to_peak * jump_time_to_peak)) * -1.0
 @export var fall_gravity := ((-2.0 * jump_height) / (jump_time_to_descent * jump_time_to_descent)) * -1.0
 
+# player_state
+
+var is_running := false
+var is_idle := true
+
 var movement_input = Vector2.ZERO
 
 func _input(event):
@@ -37,14 +42,8 @@ func _physics_process(delta: float) -> void:
 	move_logic(delta)
 	jump_logic(delta)
 	
-	#_set_animation()
+	_set_animation()
 	move_and_slide()
-
-func _set_animation():
-	if velocity:
-		if player_speed > base_speed : animation_player.play("Running0")
-		else: animation_player.play("Walking0")
-	else: animation_player.play("Idle0")
 
 func jump_logic(delta) -> void:
 	if is_on_floor():
@@ -57,16 +56,40 @@ func jump_logic(delta) -> void:
 func move_logic(delta) -> void:
 	movement_input = Input.get_vector("left","right","forward","backward").rotated(-camera.global_rotation.y)
 	var vel_2d = Vector2(velocity.x,velocity.z)
+	# player start moving
 	if movement_input != Vector2.ZERO:
+		# player start running
 		if Input.is_action_pressed("run"):
+			is_running = true
+			is_idle = false
 			player_speed = run_speed
+		# player start walking
 		else:
+			is_running = false
+			is_idle = false
 			player_speed = base_speed
+			
+		# calculate movespeed according to state
 		vel_2d += movement_input * player_speed * delta
+		print(movement_input)
 		vel_2d = vel_2d.limit_length(player_speed)
 		velocity.x = vel_2d.x
 		velocity.z = vel_2d.y # .Y = 2eme composante du vecteur 2d
+		
+		# rotate model to look toward good direction
+		var target_angle = -movement_input.angle() - PI/2
+		model.rotation.y = target_angle
+		
+	# player stop moving
 	else:
 		vel_2d = vel_2d.move_toward(Vector2.ZERO, player_speed * 16.0 * delta)
 		velocity.x = vel_2d.x
 		velocity.z = vel_2d.y # .Y = 2eme composante du vecteur 2d
+		is_idle = true
+
+func _set_animation():
+	if is_idle:
+		animation_player.play("Idle0")
+	else:
+		if is_running : animation_player.play("Running0")
+		else: animation_player.play("Walking0")
