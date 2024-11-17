@@ -48,7 +48,6 @@ func _physics_process(delta: float) -> void:
 func jump_logic(delta) -> void:
 	if is_on_floor():
 		if Input.is_action_just_pressed("jump"):
-			print(jump_velocity)
 			velocity.y = -jump_velocity
 	var gravity = jump_gravity if velocity.y > 0.0 else fall_gravity
 	velocity.y -= gravity * delta
@@ -70,15 +69,14 @@ func move_logic(delta) -> void:
 			player_speed = base_speed
 			
 		# calculate movespeed according to state
-		vel_2d += movement_input * player_speed * delta
-		print(movement_input)
+		vel_2d += movement_input * player_speed
 		vel_2d = vel_2d.limit_length(player_speed)
 		velocity.x = vel_2d.x
 		velocity.z = vel_2d.y # .Y = 2eme composante du vecteur 2d
 		
 		# rotate model to look toward good direction
 		var target_angle = -movement_input.angle() - PI/2
-		model.rotation.y = target_angle
+		model.rotation.y = rotate_toward(model.rotation.y, target_angle, 7 * delta) 
 		
 	# player stop moving
 	else:
