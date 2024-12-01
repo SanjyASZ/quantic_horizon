@@ -13,9 +13,9 @@ extends Node3D
 @export var reverse_horizontal = 1
 
 # joystick movement camera
-func _process(delta: float) -> void:
-	var joy_dir = Input.get_vector("pan_left","pan_right","pan_up","pan_down")
-	rotate_from_vector(joy_dir * delta * Vector2(joy_horizontal_sensitivity,joy_vertical_sensitivity) )
+#func _process(delta: float) -> void:
+	#var joy_dir = Input.get_vector("pan_left","pan_right","pan_up","pan_down")
+	#rotate_from_vector(joy_dir * delta * Vector2(joy_horizontal_sensitivity,joy_vertical_sensitivity) )
 
 # mouse movement camera
 func _input(event: InputEvent) -> void:

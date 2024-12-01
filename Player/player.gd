@@ -2,7 +2,7 @@ extends CharacterBody3D
 
 # another scene
 @onready var model: Node3D = $model
-@onready var animation_player: AnimationPlayer = $model/x_bot/AnimationPlayer
+@onready var xbot:= $model/x_bot
 @onready var camera: Camera3D = $CameraController/Camera3D
 
 # gravity
@@ -27,6 +27,7 @@ var player_speed := 3.0
 # player_state
 
 var is_running := false
+var is_falling := false
 var is_idle := true
 
 var movement_input = Vector2.ZERO
@@ -47,8 +48,11 @@ func _physics_process(delta: float) -> void:
 
 func jump_logic(delta) -> void:
 	if is_on_floor():
-		if Input.is_action_just_pressed("jump"):
+		is_falling = false
+		if Input.is_action_pressed("jump"):
 			velocity.y = -jump_velocity
+	else:
+		is_falling = true
 	var gravity = jump_gravity if velocity.y > 0.0 else fall_gravity
 	velocity.y -= gravity * delta
 	
@@ -76,7 +80,7 @@ func move_logic(delta) -> void:
 		
 		# rotate model to look toward good direction
 		var target_angle = -movement_input.angle() - PI/2
-		model.rotation.y = rotate_toward(model.rotation.y, target_angle, 7 * delta) 
+		model.rotation.y = rotate_toward(model.rotation.y, target_angle, 14 * delta) 
 		
 	# player stop moving
 	else:
@@ -86,8 +90,16 @@ func move_logic(delta) -> void:
 		is_idle = true
 
 func _set_animation():
-	if is_idle:
-		animation_player.play("Idle0")
+	if is_idle and not is_falling:
+		xbot.set_move_state("Idle0")
 	else:
-		if is_running : animation_player.play("Running0")
-		else: animation_player.play("Walking0")
+		if is_running and not is_falling: 
+			xbot.set_move_state("Running0")
+			is_falling = false
+		elif not is_falling: 
+			xbot.set_move_state("Walking0")
+			is_falling = false
+	if is_falling:
+		is_running = false
+		is_idle = false
+		xbot.set_move_state("Falling_Idle0")
