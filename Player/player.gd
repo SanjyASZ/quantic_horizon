@@ -53,7 +53,7 @@ func jump_logic(delta) -> void:
 			velocity.y = -jump_velocity
 	else:
 		is_falling = true
-	var gravity = jump_gravity if velocity.y > 0.0 else fall_gravity
+	gravity = jump_gravity if velocity.y > 0.0 else fall_gravity
 	velocity.y -= gravity * delta
 	
 func move_logic(delta) -> void:
@@ -92,6 +92,10 @@ func move_logic(delta) -> void:
 func _set_animation():
 	if is_idle and not is_falling:
 		xbot.set_move_state("Idle0")
+	elif is_falling:
+		is_running = false
+		is_idle = false
+		xbot.set_move_state("Falling_Idle0")
 	else:
 		if is_running and not is_falling: 
 			xbot.set_move_state("Running0")
@@ -99,7 +103,3 @@ func _set_animation():
 		elif not is_falling: 
 			xbot.set_move_state("Walking0")
 			is_falling = false
-	if is_falling:
-		is_running = false
-		is_idle = false
-		xbot.set_move_state("Falling_Idle0")
