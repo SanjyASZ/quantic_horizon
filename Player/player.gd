@@ -10,7 +10,6 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 # CONST SPEED
 var player_speed := 3.0
-
 @export var base_speed := 3.0
 @export var run_speed := 7.0
 
@@ -24,13 +23,19 @@ var player_speed := 3.0
 @export var jump_gravity := ((-2.0 * jump_height) / (jump_time_to_peak * jump_time_to_peak)) * -1.0
 @export var fall_gravity := ((-2.0 * jump_height) / (jump_time_to_descent * jump_time_to_descent)) * -1.0
 
-# player_state
-
+# player_state and movement
 var is_running := false
 var is_falling := false
 var is_idle := true
-
 var movement_input = Vector2.ZERO
+
+# Translocator
+var translocator = preload("res://Player/translocator.tscn")
+var can_throw_translocator = true
+var can_throw_translocator_timer = false
+
+func _ready():
+	await self.ready
 
 func _input(event):
 	if event.is_action_pressed("left_click"):
@@ -45,6 +50,8 @@ func _physics_process(delta: float) -> void:
 	
 	_set_animation()
 	move_and_slide()
+	
+	translocator_throw()
 
 func jump_logic(delta) -> void:
 	if is_on_floor():
@@ -103,3 +110,21 @@ func _set_animation():
 		elif not is_falling: 
 			xbot.set_move_state("Walking0")
 			is_falling = false
+
+func translocator_throw():
+	if Input.is_action_just_pressed("throw_translocator") and can_throw_translocator:
+		var translocator_inst = translocator.instantiate()
+		translocator_inst.position = $model/translocator_spawn.global_position
+		get_tree().current_scene.add_child(translocator_inst)
+		
+		var _force = -15
+		var _up_direction = 3
+		
+		var player_rotation = camera.global_transform.basis.z.normalized()
+		translocator_inst.apply_central_impulse(player_rotation  * _force + Vector3(0,_up_direction,0))
+		can_throw_translocator = false
+		$translocator_throw_timer.start()
+
+
+func _on_translocator_throw_timer_timeout() -> void:
+	can_throw_translocator_timer = true

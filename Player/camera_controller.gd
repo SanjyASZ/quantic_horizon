@@ -27,4 +27,4 @@ func rotate_from_vector(v: Vector2):
 	if v.length() == 0: return
 	rotation.y += v.x * reverse_vertical * vertical_sensitivity
 	rotation.x += v.y * reverse_horizontal * horizontal_sensitivity
-	rotation.x = clamp(rotation.x, -1, 0.5)
+	rotation.x = clamp(rotation.x, -1.3, 0.5)
