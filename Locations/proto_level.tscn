@@ -58,6 +58,18 @@ material_override = SubResource("StandardMaterial3D_yglf7")
 use_collision = true
 size = Vector3(10, 6, 10)
 
+[node name="CSGBox3D4" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.2432995, 4.357045, -19.67)
+material_override = SubResource("StandardMaterial3D_yglf7")
+use_collision = true
+size = Vector3(10, 6, 10)
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32.074642, 4.9283733, -19.67)
+material_override = SubResource("StandardMaterial3D_yglf7")
+use_collision = true
+size = Vector3(9.436401, 6, 10)
+
 [node name="Sky3D" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_y77xu")
 camera_attributes = SubResource("CameraAttributesPractical_j6tai")
@@ -80,3 +92,9 @@ script = ExtResource("5_r0te3")
 
 [node name="TimeOfDay" type="Node" parent="Sky3D"]
 script = ExtResource("6_yi0nw")
+
+[node name="CSGTorus3D" type="CSGTorus3D" parent="."]
+transform = Transform3D(-0.990459, 0, 0.13780768, -0.13281687, 0.26668334, -0.9545888, -0.036751013, -0.9637842, -0.2641389, 9.315177, 12.408264, -8.171652)
+inner_radius = 0.855
+outer_radius = 6.538
+ring_sides = 4

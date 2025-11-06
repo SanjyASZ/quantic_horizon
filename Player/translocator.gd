@@ -8,14 +8,16 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
-	if Input.is_action_just_pressed("translocator_swap") and not Player.can_throw_translocator:
-		Player.global_position = $".".global_position
-		Player.can_throw_translocator_timer = false
-		Player.can_throw_translocator = true
-		queue_free()
-
+	print( $Area3D.get_overlapping_bodies().size())
 	if Player.can_throw_translocator_timer:
+		if Input.is_action_just_pressed("translocator_swap") and not Player.can_throw_translocator and $Area3D.get_overlapping_bodies().size() == 0:
+			Player.global_position = $".".global_position + Vector3(0,1.8,0)
+			Player.can_throw_translocator_timer = false
+			Player.can_throw_translocator = true
+			queue_free()
+
 		if Input.is_action_just_pressed("throw_translocator") and not Player.can_throw_translocator:
 			Player.can_throw_translocator_timer = false
 			Player.can_throw_translocator = true
 			queue_free()
+	
