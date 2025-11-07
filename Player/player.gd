@@ -5,6 +5,10 @@ extends CharacterBody3D
 @onready var xbot:= $model/x_bot
 @onready var camera: Camera3D = $CameraController/Camera3D
 
+@onready var slow_mo_enable: AudioStreamPlayer = $SlowMoEnable
+@onready var slow_mo_disable: AudioStreamPlayer = $SlowMoDisable
+@onready var warp: AudioStreamPlayer = $Warp
+
 # gravity
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
@@ -32,13 +36,26 @@ var movement_input = Vector2.ZERO
 # Translocator
 var translocator = preload("res://Player/translocator.tscn")
 var can_throw_translocator = true
-var can_throw_translocator_timer = false
+var can_throw_translocator_timer = true
+
+# Time slow
+var is_time_slowed = false
 
 func _ready():
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	await self.ready
 
 func _input(event):
-	if event.is_action_pressed("left_click"):
+	if event.is_action_pressed("slow_time") and is_time_slowed:
+		Engine.time_scale = 1
+		is_time_slowed = false
+		slow_mo_disable.play()
+	elif event.is_action_pressed("slow_time") and not is_time_slowed:
+		Engine.time_scale = 0.3
+		is_time_slowed = true
+		slow_mo_enable.play()
+
+	if event.is_action_pressed("quit"):
 		if Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
 			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 		else:
@@ -112,19 +129,21 @@ func _set_animation():
 			is_falling = false
 
 func translocator_throw():
-	if Input.is_action_just_pressed("throw_translocator") and can_throw_translocator:
-		var translocator_inst = translocator.instantiate()
-		translocator_inst.position = $model/translocator_spawn.global_position
-		get_tree().current_scene.add_child(translocator_inst)
-		
-		var _force = -15
-		var _up_direction = 3
-		
-		var player_rotation = camera.global_transform.basis.z.normalized()
-		translocator_inst.apply_central_impulse(player_rotation  * _force + Vector3(0,_up_direction,0))
-		can_throw_translocator = false
-		$translocator_throw_timer.start()
-
+	if can_throw_translocator_timer:
+		print(can_throw_translocator)
+		if Input.is_action_just_pressed("throw_translocator") and can_throw_translocator:
+			can_throw_translocator_timer = false
+			can_throw_translocator = false
+			var translocator_inst = translocator.instantiate()
+			translocator_inst.position = $model/translocator_spawn.global_position
+			get_tree().current_scene.add_child(translocator_inst)
+			var _force = -15
+			var _up_direction = 3
+			
+			var player_rotation = camera.global_transform.basis.z.normalized()
+			translocator_inst.apply_central_impulse(player_rotation  * _force + Vector3(0,_up_direction,0))
+			$translocator_throw_timer.start()
+			
 
 func _on_translocator_throw_timer_timeout() -> void:
 	can_throw_translocator_timer = true

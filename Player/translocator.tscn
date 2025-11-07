@@ -1,15 +1,18 @@
-[gd_scene load_steps=6 format=3 uid="uid://c2knt2ykje0bw"]
+[gd_scene load_steps=8 format=3 uid="uid://c2knt2ykje0bw"]
 
 [ext_resource type="Script" uid="uid://dhhf0nqlgo6n7" path="res://Player/translocator.gd" id="1_8nue0"]
+[ext_resource type="AudioStream" uid="uid://5ccfxffpayjb" path="res://AUDIO/SFX/warp.mp3" id="2_7dkki"]
+[ext_resource type="PackedScene" uid="uid://7dgr0mmck5aj" path="res://warp_effect.tscn" id="3_v7s82"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_3h1u0"]
 bounce = 0.3
 
-[sub_resource type="BoxMesh" id="BoxMesh_8nue0"]
-size = Vector3(0.1, 0.1, 0.1)
+[sub_resource type="SphereMesh" id="SphereMesh_v7s82"]
+radius = 0.08
+height = 0.16
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_7dkki"]
-size = Vector3(0.11, 0.11, 0.11)
+[sub_resource type="SphereShape3D" id="SphereShape3D_l47bo"]
+radius = 0.1
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_8nue0"]
 margin = 0.01
@@ -18,17 +21,24 @@ radius = 0.05
 
 [node name="Translocator" type="RigidBody3D"]
 physics_material_override = SubResource("PhysicsMaterial_3h1u0")
+lock_rotation = true
 continuous_cd = true
 script = ExtResource("1_8nue0")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-mesh = SubResource("BoxMesh_8nue0")
+mesh = SubResource("SphereMesh_v7s82")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-shape = SubResource("BoxShape3D_7dkki")
+shape = SubResource("SphereShape3D_l47bo")
 
 [node name="Area3D" type="Area3D" parent="."]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9287163, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9577465, 0)
 shape = SubResource("CylinderShape3D_8nue0")
+debug_color = Color(0.91902846, 0.10924349, 0.19673735, 0.41960785)
+
+[node name="warp_sound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_7dkki")
+
+[node name="warp_effect" parent="." instance=ExtResource("3_v7s82")]
