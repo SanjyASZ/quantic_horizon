@@ -3,7 +3,8 @@ extends RigidBody3D
 @onready var Player = get_node("../Player")
 @onready var warp_sound: AudioStreamPlayer = $warp_sound
 @onready var warp_vfx = get_node("warp_effect/GPUParticles3D") 
-@onready var mesh_instance_3d: MeshInstance3D = $MeshInstance3D
+@onready var ring_001_ring_1_mat_0: MeshInstance3D = $Ring001_Ring1_Mat_0
+@onready var ring_001_ring_1_mat_1: MeshInstance3D = $Ring001_Ring1_Mat_1
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -18,7 +19,8 @@ func _process(_delta: float) -> void:
 				warp_sound.play()
 			warp_vfx.emitting = true
 			Player.global_position = $".".global_position + Vector3(0,0.59985,0)
-			mesh_instance_3d.visible = false
+			ring_001_ring_1_mat_0.visible = false
+			ring_001_ring_1_mat_1.visible = false
 			while warp_sound.is_playing():
 				await get_tree().create_timer(0.01).timeout
 			Player.can_throw_translocator_timer = true
@@ -30,7 +32,8 @@ func _process(_delta: float) -> void:
 				warp_sound.pitch_scale = 2.0
 				warp_sound.play()
 			warp_vfx.emitting = true
-			mesh_instance_3d.visible = false
+			ring_001_ring_1_mat_0.visible = false
+			ring_001_ring_1_mat_1.visible = false
 			while warp_sound.is_playing():
 				await get_tree().create_timer(0.01).timeout
 			Player.can_throw_translocator_timer = true

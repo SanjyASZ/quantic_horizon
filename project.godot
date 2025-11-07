@@ -13,11 +13,10 @@ config_version=5
 config/name="3D_RPG"
 run/main_scene="res://Locations/proto_level.tscn"
 config/features=PackedStringArray("4.5", "Forward Plus")
-config/icon="res://icon.svg"
 
 [autoload]
 
-BackgroundMusic="*res://background_music.tscn"
+BackgroundMusic="*res://AUDIO/MUSIC/background_music.tscn"
 
 [editor_plugins]
 
