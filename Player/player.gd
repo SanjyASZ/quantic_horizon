@@ -43,7 +43,7 @@ var is_time_slowed = false
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-	await self.ready
+	#await self.ready
 
 func _input(event):
 	if event.is_action_pressed("slow_time") and is_time_slowed:
@@ -51,7 +51,7 @@ func _input(event):
 		is_time_slowed = false
 		slow_mo_disable.play()
 	elif event.is_action_pressed("slow_time") and not is_time_slowed:
-		Engine.time_scale = 0.3
+		Engine.time_scale = 60
 		is_time_slowed = true
 		slow_mo_enable.play()
 
@@ -64,10 +64,8 @@ func _input(event):
 func _physics_process(delta: float) -> void:
 	move_logic(delta)
 	jump_logic(delta)
-	
 	_set_animation()
 	move_and_slide()
-	
 	translocator_throw()
 
 func jump_logic(delta) -> void:
@@ -130,7 +128,6 @@ func _set_animation():
 
 func translocator_throw():
 	if can_throw_translocator_timer:
-		print(can_throw_translocator)
 		if Input.is_action_just_pressed("throw_translocator") and can_throw_translocator:
 			can_throw_translocator_timer = false
 			can_throw_translocator = false
