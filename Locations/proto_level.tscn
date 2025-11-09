@@ -1,7 +1,8 @@
-[gd_scene load_steps=62 format=3 uid="uid://doicpig71avvk"]
+[gd_scene load_steps=63 format=3 uid="uid://doicpig71avvk"]
 
 [ext_resource type="PackedScene" uid="uid://b1puiywybi7sl" path="res://Player/Player.tscn" id="1_24gjj"]
 [ext_resource type="Texture2D" uid="uid://sb24qw3buk0i" path="res://Environnements/Prototype Textures/black.png" id="1_24uag"]
+[ext_resource type="Texture2D" uid="uid://bkbwp6pieoml" path="res://Environnements/SHINING/cyberpunk_room_flooring_0.png" id="1_w0qtn"]
 [ext_resource type="Script" uid="uid://bcoq22f375hfx" path="res://addons/sky_3d/src/Sky3D.gd" id="4_k3bpx"]
 [ext_resource type="Texture2D" uid="uid://cvtqfcxxl3d3w" path="res://Environnements/Prototype Textures/Grey 2.png" id="4_w0qtn"]
 [ext_resource type="Texture2D" uid="uid://y5m5cn38b7eb" path="res://Environnements/Prototype Textures/Green 3.png" id="5_24uag"]
@@ -25,8 +26,10 @@
 [ext_resource type="ArrayMesh" uid="uid://llcdckggb1vt" path="res://Environnements/Modular SciFi MegaKit[Standard]/OBJ/Platforms/Door_Simple.obj" id="22_dd21d"]
 [ext_resource type="Texture2D" uid="uid://dhks4yj0xln3c" path="res://Environnements/Modular SciFi MegaKit[Standard]/Textures/T_Trim_03_BaseColor.png" id="22_wicwd"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_w0qtn"]
-albedo_texture = ExtResource("4_w0qtn")
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_24uag"]
+albedo_texture = ExtResource("1_w0qtn")
+uv1_scale = Vector3(10, 10, 10)
+stencil_flags = 2
 
 [sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_4n0b6"]
 use_debanding = false
@@ -144,7 +147,7 @@ data = PackedVector3Array(-0.241, 4.0489, 0.1016, -0.0111, 4.0489, 0.1016, -0.22
 
 [node name="Floor" type="CSGBox3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
-material_override = SubResource("StandardMaterial3D_w0qtn")
+material_override = SubResource("StandardMaterial3D_24uag")
 use_collision = true
 size = Vector3(100, 1, 100)
 

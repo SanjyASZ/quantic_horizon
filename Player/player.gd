@@ -43,7 +43,7 @@ var is_time_slowed = false
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-	await self.ready
+	#await self.ready
 
 func _input(event):
 	if event.is_action_pressed("slow_time") and is_time_slowed:
@@ -130,7 +130,6 @@ func _set_animation():
 
 func translocator_throw():
 	if can_throw_translocator_timer:
-		print(can_throw_translocator)
 		if Input.is_action_just_pressed("throw_translocator") and can_throw_translocator:
 			can_throw_translocator_timer = false
 			can_throw_translocator = false
