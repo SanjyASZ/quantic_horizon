@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://dg7fljewbskm"]
+
+[ext_resource type="AudioStream" uid="uid://dpreui2dywnpk" path="res://AUDIO/MUSIC/cozy_best_song.mp3" id="1_4m5bw"]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer"]
+stream = ExtResource("1_4m5bw")
+volume_db = -17.174
+autoplay = true
