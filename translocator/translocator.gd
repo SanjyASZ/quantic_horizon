@@ -5,6 +5,8 @@ extends RigidBody3D
 @onready var warp_vfx = get_node("warp_effect/GPUParticles3D") 
 @onready var ring_001_ring_1_mat_0: MeshInstance3D = $Ring001_Ring1_Mat_0
 @onready var ring_001_ring_1_mat_1: MeshInstance3D = $Ring001_Ring1_Mat_1
+@onready var translocator_index = 0
+@onready var translocator_added = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -13,7 +15,7 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
 	if Player.can_throw_translocator_timer:
-		if Input.is_action_just_pressed("translocator_swap") and not Player.can_throw_translocator and $Area3D.get_overlapping_bodies().size() == 0:
+		if Input.is_action_just_pressed("throw_translocator") and not Player.can_throw_translocator and $Area3D.get_overlapping_bodies().size() == 0:
 			if ! warp_sound.is_playing():
 				warp_sound.pitch_scale = 1.0
 				warp_sound.play()
@@ -27,7 +29,7 @@ func _process(_delta: float) -> void:
 			Player.can_throw_translocator = true
 			queue_free()
 			
-		if Input.is_action_just_pressed("throw_translocator") and not Player.can_throw_translocator:
+		if Input.is_action_just_pressed("translocator_swap") and not Player.can_throw_translocator:
 			if ! warp_sound.is_playing():
 				warp_sound.pitch_scale = 2.0
 				warp_sound.play()

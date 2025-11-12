@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=3 uid="uid://c5myd2qgcuxrd"]
+
+[ext_resource type="Script" uid="uid://bjj1tfyos5s6e" path="res://resonograph/resonograph.gd" id="1_emu61"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_emu61"]
+transparency = 1
+cull_mode = 2
+albedo_color = Color(0, 0.5411765, 0.827451, 0.56078434)
+
+[sub_resource type="SphereMesh" id="SphereMesh_emu61"]
+material = SubResource("StandardMaterial3D_emu61")
+radius = 1.0
+height = 2.0
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_emu61"]
+radius = 1.33666
+
+[node name="resonograph" type="Node3D"]
+script = ExtResource("1_emu61")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_emu61")
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="resonograph_range" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("SphereShape3D_emu61")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 60.0
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

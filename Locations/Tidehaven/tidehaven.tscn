@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://doicpig71avvk"]
+[gd_scene load_steps=28 format=3 uid="uid://doicpig71avvk"]
 
 [ext_resource type="Script" uid="uid://dd8a0yr8f7iw8" path="res://Locations/Tidehaven/tidehaven.gd" id="1_de1lx"]
 [ext_resource type="PackedScene" uid="uid://b1puiywybi7sl" path="res://Player/Player.tscn" id="2_qove5"]
@@ -10,6 +10,7 @@
 [ext_resource type="Terrain3DMaterial" uid="uid://ynao1t4c2gmd" path="res://Terrain_3D/tidehaven_mat.tres" id="8_e1xa4"]
 [ext_resource type="Terrain3DAssets" uid="uid://b18weu8x5ejh" path="res://Terrain_3D/tidehaven_assets.tres" id="9_qttn5"]
 [ext_resource type="Script" uid="uid://cib2rig7vup10" path="res://addons/terrain_3d/tools/importer.gd" id="10_sw76k"]
+[ext_resource type="PackedScene" uid="uid://c6tmq6f55s8lj" path="res://translocator/fixed_translocator.tscn" id="11_awi0n"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_a35ol"]
 sky_top_color = Color(0.021654362, 0.0142487055, 0.091233425, 1)
@@ -92,7 +93,7 @@ tracks/1/path = NodePath("Sun:visible")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 6.3333335, 20),
+"times": PackedFloat32Array(0, 6.6666665, 20),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [false, true, false]
@@ -247,7 +248,7 @@ script = ExtResource("1_de1lx")
 dayLengthInSeconds = 2640.0
 
 [node name="Sun" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.8660254, 0.48296297, -0.12940949, 0, -0.25881904, -0.9659255, -0.50000006, -0.83651626, 0.2241438, 0, 0, 0)
+transform = Transform3D(-0.8660254, 0.48296288, -0.12940949, 0, -0.25881898, -0.9659255, -0.50000006, -0.8365161, 0.2241438, 0, 0, 0)
 shadow_enabled = true
 directional_shadow_max_distance = 1.0
 
@@ -318,3 +319,12 @@ metadata/_edit_lock_ = true
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 237.66315, -93.69551, 223.23993)
 mesh = SubResource("BoxMesh_qttn5")
+
+[node name="fixed_translocator" parent="." instance=ExtResource("11_awi0n")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 223.797, 50.242, 171.365)
+
+[node name="fixed_translocator2" parent="." instance=ExtResource("11_awi0n")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 210.6935, -1.072825, 392.92636)
+
+[node name="fixed_translocator3" parent="." instance=ExtResource("11_awi0n")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 86.71274, -31.288952, 174.91608)

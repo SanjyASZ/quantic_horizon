@@ -1,6 +1,6 @@
 [gd_scene load_steps=19 format=3 uid="uid://dqbgd625oqhyp"]
 
-[ext_resource type="PackedScene" uid="uid://bhiuj8oaakyay" path="res://static_ressources/x_bot_animated.gltf" id="1_qwdm8"]
+[ext_resource type="PackedScene" uid="uid://bhiuj8oaakyay" path="res://Player/x_bot/x_bot_animated.gltf" id="1_qwdm8"]
 [ext_resource type="Script" uid="uid://dmhhlyvk62c0v" path="res://Player/x_bot.gd" id="2_x2gjm"]
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_qsipq"]

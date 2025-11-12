@@ -34,7 +34,7 @@ var is_idle := true
 var movement_input = Vector2.ZERO
 
 # Translocator
-var translocator = preload("res://Player/translocator.tscn")
+var translocator = preload("res://translocator/translocator.tscn")
 var can_throw_translocator = true
 var can_throw_translocator_timer = true
 
@@ -56,11 +56,8 @@ func _input(event):
 		slow_mo_enable.play()
 
 	if event.is_action_pressed("quit"):
-		if Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
-			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-		else:
-			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-
+		get_tree().quit()
+		
 func _physics_process(delta: float) -> void:
 	move_logic(delta)
 	jump_logic(delta)
