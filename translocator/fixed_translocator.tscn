@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=4 uid="uid://c6tmq6f55s8lj"]
+[gd_scene load_steps=9 format=4 uid="uid://c6tmq6f55s8lj"]
 
 [ext_resource type="Texture2D" uid="uid://csbl7sai1twen" path="res://ASSETS/fantasy_rings_0.jpg" id="1_dqvqo"]
 [ext_resource type="Script" uid="uid://cuexphekudf5o" path="res://translocator/fixed_translocator.gd" id="1_ragm7"]
 [ext_resource type="Texture2D" uid="uid://3lq4237b8tjd" path="res://ASSETS/fantasy_rings_1.jpg" id="2_ragm7"]
+[ext_resource type="AudioStream" uid="uid://ddqnsyldnmras" path="res://AUDIO/SFX/sonar-ping.mp3" id="4_177px"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_oyp68"]
 resource_name = "Ring1_Mat"
@@ -67,3 +68,6 @@ skeleton = NodePath("")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.867813e-06, 0.26541847, 0.01171875)
 shape = SubResource("BoxShape3D_nvaxp")
+
+[node name="SonarPing" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_177px")

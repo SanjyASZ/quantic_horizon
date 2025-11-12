@@ -10,6 +10,7 @@ extends Node3D
 @onready var material = sphere_mesh as StandardMaterial3D
 @onready var resonograph_range: CollisionShape3D = $Area3D/resonograph_range
 @onready var Player = get_node("../")
+@onready var dark_impact_sound: AudioStreamPlayer = $DarkImpactSound
 
 var message_box = preload("res://UI/message_box.tscn")
 var message_box_inst 
@@ -30,11 +31,20 @@ func _process(delta: float) -> void:
 	
 	# resonograph activation
 	if Input.is_action_just_pressed("resonograph") and !on_going_scan:
+		# reset scan
+		sphere_mesh.set_radius(1.0)
+		sphere_mesh.set_height(2.0)
+		current_radius = 1.0
+		current_transparency = 1.0
+		on_going_scan = true
+		# timer
 		$Timer.start(0.0)
 		mesh_instance_3d.visible = true
 		elapsed_time = 0
 		time_start = Time.get_unix_time_from_system()
-		on_going_scan = true
+		# sound
+		dark_impact_sound.pitch_scale = 1.0
+		dark_impact_sound.play()
 		
 	# resonograph dectection
 	if elapsed_time < 3 and on_going_scan:
@@ -51,7 +61,7 @@ func _process(delta: float) -> void:
 		for obj in translocator_detected:
 			if obj.is_in_group("fixed_translocator"):
 				obj.translocator_detected()
-		
+				
 		# time calcul 		
 		time_now = Time.get_unix_time_from_system()
 		elapsed_time = time_now - time_start 
