@@ -1,10 +1,10 @@
 [gd_scene load_steps=12 format=4 uid="uid://c2knt2ykje0bw"]
 
 [ext_resource type="Script" uid="uid://dhhf0nqlgo6n7" path="res://translocator/translocator.gd" id="1_8nue0"]
-[ext_resource type="AudioStream" uid="uid://5ccfxffpayjb" path="res://AUDIO/SFX/warp.mp3" id="2_7dkki"]
 [ext_resource type="Texture2D" uid="uid://csbl7sai1twen" path="res://ASSETS/fantasy_rings_0.jpg" id="2_7tp3o"]
 [ext_resource type="Texture2D" uid="uid://3lq4237b8tjd" path="res://ASSETS/fantasy_rings_1.jpg" id="3_md487"]
 [ext_resource type="PackedScene" uid="uid://7dgr0mmck5aj" path="res://translocator/warp_effect.tscn" id="3_v7s82"]
+[ext_resource type="AudioStream" uid="uid://og1c3xy7lur" path="res://AUDIO/SFX/warp.mp3" id="4_yq26d"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_3h1u0"]
 bounce = 0.3
@@ -87,6 +87,6 @@ shape = SubResource("CylinderShape3D_8nue0")
 debug_color = Color(0.91902846, 0.10924349, 0.19673735, 0.41960785)
 
 [node name="warp_sound" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("2_7dkki")
+stream = ExtResource("4_yq26d")
 
 [node name="warp_effect" parent="." instance=ExtResource("3_v7s82")]

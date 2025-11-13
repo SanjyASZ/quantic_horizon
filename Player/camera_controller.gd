@@ -1,16 +1,16 @@
 extends Node3D
 
 # mouse sensitivity
-@export var vertical_sensitivity = 0.0007
-@export var horizontal_sensitivity = 0.0007
+@export var vertical_sensitivity: float = 0.0007
+@export var horizontal_sensitivity: float  = 0.0007
 
 # Joystick sensitivity
-@export var joy_vertical_sensitivity = 100.0
-@export var joy_horizontal_sensitivity = 50.0
+@export var joy_vertical_sensitivity: float  = 100.0
+@export var joy_horizontal_sensitivity: float  = 50.0
 
 # revers movement camera
-@export var reverse_vertical = -1
-@export var reverse_horizontal = 1
+@export var reverse_vertical: float  = -1.0
+@export var reverse_horizontal: float  = 1.0
 
  #joystick movement camera with delta ?
 func _process(_delta: float) -> void:
@@ -27,4 +27,4 @@ func rotate_from_vector(v: Vector2):
 	if v.length() == 0: return
 	rotation.y += v.x * reverse_vertical * vertical_sensitivity
 	rotation.x += v.y * reverse_horizontal * horizontal_sensitivity
-	rotation.x = clamp(rotation.x, -1.3, 0.5)
+	rotation.x = clamp(rotation.x, -1.5, 0.9)

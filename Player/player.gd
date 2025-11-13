@@ -67,19 +67,25 @@ func _physics_process(delta: float) -> void:
 
 func jump_logic(delta) -> void:
 	if is_on_floor():
+		xbot.visible = true
 		is_falling = false
 		if Input.is_action_pressed("jump"):
+			xbot.visible = false
 			velocity.y = -jump_velocity
 	else:
+		xbot.visible = false
 		is_falling = true
 	gravity = jump_gravity if velocity.y > 0.0 else fall_gravity
 	velocity.y -= gravity * delta
 	
 func move_logic(delta) -> void:
+	model.rotation.y = rotate_toward(model.rotation.y, camera.global_rotation.y, 9999999 ) 
 	movement_input = Input.get_vector("left","right","forward","backward").rotated(-camera.global_rotation.y)
 	var vel_2d = Vector2(velocity.x,velocity.z)
 	# player start moving
 	if movement_input != Vector2.ZERO:
+		if !is_falling:
+			xbot.visible = true
 		# player start running
 		if Input.is_action_pressed("run"):
 			is_running = true
@@ -97,17 +103,18 @@ func move_logic(delta) -> void:
 		velocity.x = vel_2d.x
 		velocity.z = vel_2d.y # .Y = 2eme composante du vecteur 2d
 		
-		# rotate model to look toward good direction
-		var target_angle = -movement_input.angle() - PI/2
-		model.rotation.y = rotate_toward(model.rotation.y, target_angle, 14 * delta) 
-		
+		## rotate model to look toward good direction
+		#var target_angle = -movement_input.angle() - PI/2
+		#model.rotation.y = rotate_toward(model.rotation.y, camera.global_rotation.y, 9999999 ) 
+		#
 	# player stop moving
 	else:
 		vel_2d = vel_2d.move_toward(Vector2.ZERO, player_speed * 16.0 * delta)
 		velocity.x = vel_2d.x
 		velocity.z = vel_2d.y # .Y = 2eme composante du vecteur 2d
 		is_idle = true
-
+		xbot.visible = false
+	
 func _set_animation():
 	if is_idle and not is_falling:
 		xbot.set_move_state("Idle0")

@@ -15,29 +15,36 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
 	if Player.can_throw_translocator_timer:
+		# verif key pressed can throw and no above collision
 		if Input.is_action_just_pressed("throw_translocator") and not Player.can_throw_translocator and $Area3D.get_overlapping_bodies().size() == 0:
-			if ! warp_sound.is_playing():
-				warp_sound.pitch_scale = 1.0
-				warp_sound.play()
 			warp_vfx.emitting = true
 			Player.global_position = $".".global_position + Vector3(0,0.59985,0)
 			ring_001_ring_1_mat_0.visible = false
 			ring_001_ring_1_mat_1.visible = false
+			if ! warp_sound.is_playing():
+				warp_sound.pitch_scale = 1.0
+				warp_sound.play()
 			while warp_sound.is_playing():
-				await get_tree().create_timer(0.01).timeout
-			Player.can_throw_translocator_timer = true
-			Player.can_throw_translocator = true
-			queue_free()
+				Player.can_throw_translocator_timer = false
+				Player.can_throw_translocator = false
+				await get_tree().create_timer(0.1).timeout
+			if ! warp_sound.is_playing():
+				Player.can_throw_translocator_timer = true
+				Player.can_throw_translocator = true
+				queue_free()
 			
 		if Input.is_action_just_pressed("translocator_swap") and not Player.can_throw_translocator:
-			if ! warp_sound.is_playing():
-				warp_sound.pitch_scale = 2.0
-				warp_sound.play()
 			warp_vfx.emitting = true
 			ring_001_ring_1_mat_0.visible = false
 			ring_001_ring_1_mat_1.visible = false
+			if ! warp_sound.is_playing():
+				warp_sound.pitch_scale = 2.0
+				warp_sound.play()
 			while warp_sound.is_playing():
-				await get_tree().create_timer(0.01).timeout
-			Player.can_throw_translocator_timer = true
-			Player.can_throw_translocator = true
-			queue_free()
+				Player.can_throw_translocator_timer = false
+				Player.can_throw_translocator = false
+				await get_tree().create_timer(0.1).timeout
+			if ! warp_sound.is_playing():
+				Player.can_throw_translocator_timer = true
+				Player.can_throw_translocator = true
+				queue_free()

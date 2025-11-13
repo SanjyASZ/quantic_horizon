@@ -44,6 +44,10 @@ BackgroundMusic="*res://AUDIO/MUSIC/background_music.tscn"
 SimpleGrass="*res://addons/simplegrasstextured/singleton.tscn"
 Global="*res://Global.gd"
 
+[display]
+
+window/size/mode=3
+
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/simplegrasstextured/plugin.cfg", "res://addons/terrain_3d/plugin.cfg", "res://addons/zylann.hterrain/plugin.cfg")

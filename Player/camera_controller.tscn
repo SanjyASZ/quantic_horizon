@@ -6,5 +6,4 @@
 script = ExtResource("1_afv8o")
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(-1, 4.37114e-08, -7.57103e-08, 0, 0.866025, 0.5, 8.74228e-08, 0.5, -0.866025, 0, 12, -18)
-h_offset = 1.0
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0, 1.6, 3)

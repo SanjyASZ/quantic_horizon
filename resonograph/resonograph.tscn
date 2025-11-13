@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://c5myd2qgcuxrd"]
+[gd_scene load_steps=7 format=3 uid="uid://c5myd2qgcuxrd"]
 
 [ext_resource type="Script" uid="uid://bjj1tfyos5s6e" path="res://resonograph/resonograph.gd" id="1_emu61"]
 [ext_resource type="AudioStream" uid="uid://cu5hk26pc7fh" path="res://AUDIO/SFX/dark-impact-sound.mp3" id="2_s32u8"]
+[ext_resource type="AudioStream" uid="uid://ddqnsyldnmras" path="res://AUDIO/SFX/sonar-ping.mp3" id="3_k264i"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_emu61"]
 transparency = 1
@@ -28,9 +29,14 @@ mesh = SubResource("SphereMesh_emu61")
 shape = SubResource("SphereShape3D_emu61")
 
 [node name="Timer" type="Timer" parent="."]
+process_callback = 0
 wait_time = 10.0
+one_shot = true
 
 [node name="DarkImpactSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("2_s32u8")
+
+[node name="SonarPing" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_k264i")
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
