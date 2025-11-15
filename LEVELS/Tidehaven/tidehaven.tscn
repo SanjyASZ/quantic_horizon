@@ -8,7 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://u3ybdjtlu8je" path="res://GRAPHICS/ASSETS/Prototype Textures/blue 3.png" id="6_ki6o7"]
 [ext_resource type="Texture2D" uid="uid://btwg3gac4bky3" path="res://GRAPHICS/ASSETS/Prototype Textures/blue 2.png" id="7_nmkhh"]
 [ext_resource type="Texture2D" uid="uid://yadn3dlvy1ap" path="res://GRAPHICS/ASSETS/PIC/code_translocator_1.png" id="8_lgj5w"]
-[ext_resource type="PackedScene" uid="uid://c6tmq6f55s8lj" path="res://PLAYER/Tools/warp_point/warp_point.tscn" id="11_awi0n"]
+[ext_resource type="PackedScene" uid="uid://c6tmq6f55s8lj" path="res://LEVELS/warp_point/warp_point.tscn" id="11_awi0n"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_a35ol"]
 sky_top_color = Color(0.021654362, 0.0142487055, 0.091233425, 1)
@@ -252,7 +252,7 @@ script = ExtResource("1_de1lx")
 dayLengthInSeconds = 2640.0
 
 [node name="Sun" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.8660254, 0.4829628, -0.12940949, 0, -0.25881895, -0.9659255, -0.50000006, -0.83651596, 0.2241438, 0, 0, 0)
+transform = Transform3D(-0.8660254, 0.48296276, -0.12940949, 0, -0.25881892, -0.9659255, -0.50000006, -0.8365159, 0.2241438, 0, 0, 0)
 shadow_enabled = true
 directional_shadow_max_distance = 1.0
 

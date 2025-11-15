@@ -19,13 +19,10 @@ func translocator_detected():
 		Global.all_translocator_detected.append([self.global_position])
 		translocator_added = true
 		if !sonar_ping.is_playing():
-			print("play sfx")
 			sonar_ping.play()
 			play_sonar = false 
-			print(Global.all_translocator_detected)
 		else:
 			while sonar_ping.is_playing():
 				await get_tree().create_timer(0.1).timeout
-			print("wait ok")
 			sonar_ping.play()
 			play_sonar = false

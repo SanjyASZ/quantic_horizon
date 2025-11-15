@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=4 uid="uid://c6tmq6f55s8lj"]
 
-[ext_resource type="Script" uid="uid://cuexphekudf5o" path="res://PLAYER/Tools/warp_point/warp_point.gd" id="1_f0hxa"]
+[ext_resource type="Script" uid="uid://cuexphekudf5o" path="res://LEVELS/warp_point/warp_point.gd" id="1_f0hxa"]
 [ext_resource type="Texture2D" uid="uid://csbl7sai1twen" path="res://GRAPHICS/ASSETS/fantasy_rings_0.jpg" id="2_va2in"]
 [ext_resource type="Texture2D" uid="uid://3lq4237b8tjd" path="res://GRAPHICS/ASSETS/fantasy_rings_1.jpg" id="3_08dfd"]
 [ext_resource type="AudioStream" uid="uid://ddqnsyldnmras" path="res://AUDIO/SFX/sonar-ping.mp3" id="4_atqch"]

@@ -11,16 +11,20 @@ var is_time_slowed = false
 var audio_player: AudioStreamPlayer
 
 var radial_menu_instanciated = false
+var radial_menu 
 
 func _ready():
 	audio_player = AudioStreamPlayer.new()
 	add_child(audio_player)
 	
 func _process(_delta):
-	if !radial_menu_instanciated:
-		var radial_menu = RADIAL_MENU.instantiate()
+	if !radial_menu_instanciated and !is_time_slowed:
+		radial_menu = RADIAL_MENU.instantiate()
 		get_tree().current_scene.add_child(radial_menu)
 		radial_menu_instanciated = true
+	if is_time_slowed:
+		get_tree().current_scene.remove_child(radial_menu)
+		radial_menu_instanciated = false
 
 # Global input better than using it in process for non physics object
 func _input(event):
