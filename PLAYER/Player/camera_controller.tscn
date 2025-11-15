@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://u660d8xsg0qc"]
+
+[ext_resource type="Script" uid="uid://c2mxo5r1cl54a" path="res://PLAYER/Player/camera_controller.gd" id="1_afv8o"]
+[ext_resource type="Script" uid="uid://dpnta1rm87smj" path="res://UI/fps.gd" id="2_sv7x4"]
+
+[node name="CameraController" type="Node3D"]
+script = ExtResource("1_afv8o")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0, 1.6, 2)
+
+[node name="Label" type="Label" parent="Camera3D"]
+offset_right = 40.0
+offset_bottom = 23.0
+script = ExtResource("2_sv7x4")

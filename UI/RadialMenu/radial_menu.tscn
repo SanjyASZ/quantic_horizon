@@ -1,0 +1,42 @@
+[gd_scene load_steps=9 format=3 uid="uid://qrmjq6bs8xg1"]
+
+[ext_resource type="Script" uid="uid://0uwnwb74iq0k" path="res://UI/RadialMenu/radial_menu.gd" id="1_p3ujw"]
+[ext_resource type="Texture2D" uid="uid://d1toxuoksfdbr" path="res://UI/Visuals/Icons/spikeball.svg" id="2_28lhc"]
+[ext_resource type="Texture2D" uid="uid://bi5wq46kj1jk5" path="res://UI/Visuals/Icons/abstract-024.svg" id="3_7uuxn"]
+[ext_resource type="Texture2D" uid="uid://cq4r85g8fo1vp" path="res://UI/Visuals/Icons/trench-assault.svg" id="4_fohl1"]
+[ext_resource type="Texture2D" uid="uid://buysyoe84q8jb" path="res://UI/Visuals/Icons/astrolabe.svg" id="5_5s8hh"]
+[ext_resource type="Texture2D" uid="uid://wo3drms65vxw" path="res://UI/Visuals/Icons/catch.svg" id="6_57lwf"]
+[ext_resource type="AudioStream" uid="uid://dx016h5ooq7vs" path="res://AUDIO/SFX/menu-click-357350.mp3" id="7_7uuxn"]
+[ext_resource type="AudioStream" uid="uid://c25mmj6o7vowf" path="res://AUDIO/SFX/select.mp3" id="8_fohl1"]
+
+[node name="radial_menu" type="Node2D"]
+script = ExtResource("1_p3ujw")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Center" type="Sprite2D" parent="CanvasLayer"]
+position = Vector2(570, 304)
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("2_28lhc")
+
+[node name="resonograph_icon" type="Sprite2D" parent="CanvasLayer/Center"]
+scale = Vector2(0.99999994, 0.99999994)
+texture = ExtResource("3_7uuxn")
+
+[node name="translocator_icon" type="Sprite2D" parent="CanvasLayer/Center"]
+scale = Vector2(0.99999994, 0.99999994)
+texture = ExtResource("4_fohl1")
+
+[node name="disruptor_icon" type="Sprite2D" parent="CanvasLayer/Center"]
+scale = Vector2(0.99999994, 0.99999994)
+texture = ExtResource("5_5s8hh")
+
+[node name="hand_icon" type="Sprite2D" parent="CanvasLayer/Center"]
+scale = Vector2(0.99999994, 0.99999994)
+texture = ExtResource("6_57lwf")
+
+[node name="MenuClick357350" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_7uuxn")
+
+[node name="Select" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_fohl1")
