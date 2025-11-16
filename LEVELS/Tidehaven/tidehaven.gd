@@ -2,7 +2,7 @@ extends Node3D
 
 signal time_updated(animationTime)
 
-@export var startTime = 6
+@export var startTime = 20
 @export var dayLengthInSeconds:float = 24
 
 @export var morningColorTop: Color = Color("5897fa")
@@ -14,8 +14,8 @@ signal time_updated(animationTime)
 @export var afternoonColorTop: Color = Color("3d6fcd")
 @export var afternoonColorHorizon: Color = Color("e98174")
 
-@export var nightColorTop: Color = Color("090e14")
-@export var nightColorHorizon: Color = Color("010049")
+@export var nightColorTop: Color = Color("000000") #090e14
+@export var nightColorHorizon: Color = Color("000000") #010049
 
 @onready var world_environment: WorldEnvironment = $WorldEnvironment
 @onready var animation_player: AnimationPlayer = $AnimationPlayer

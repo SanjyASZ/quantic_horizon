@@ -27,6 +27,9 @@ var grab:RigidBody3D
 
 #joystick movement camera with delta ?
 func _process(_delta: float) -> void:
+	# Joystick control
+	var joy_dir = Input.get_vector("joy_cam_left","joy_cam_right","joy_cam_up","joy_cam_down")
+	rotate_from_vector(joy_dir * Vector2(joy_horizontal_sensitivity,joy_vertical_sensitivity) )
 	if Global.tools[3]:
 		#If we are pressing the grab action
 		if Input.is_action_pressed("use_tool"):

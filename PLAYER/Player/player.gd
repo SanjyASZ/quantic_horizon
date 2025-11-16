@@ -138,12 +138,13 @@ func _physics_process(delta: float) -> void:
 	jump_logic(delta)
 	_set_animation()
 	# push mechanic
-	for i in get_slide_collision_count(): #For each collision with the player
-		var c := get_slide_collision(i) #Get the colliding node
-		if c.get_collider() is RigidBody3D: #If the node hase physics
-			var push_dir = -c.get_normal() #The push direction is the oposite of the impact direction
-			var velocity_diff_in_push_dir = self.velocity.dot(push_dir) - c.get_collider().linear_velocity.dot(push_dir) #The push velocity calculated by subtructing the velocity of the player from the node compared to the direction
-			c.get_collider().apply_central_force(push_dir * velocity_diff_in_push_dir * push) #Aplly the force to the node times the push force variable
+	if Global.tools[3]: 
+		for i in get_slide_collision_count(): #For each collision with the player
+			var c := get_slide_collision(i) #Get the colliding node
+			if c.get_collider() is RigidBody3D: #If the node hase physics
+				var push_dir = -c.get_normal() #The push direction is the oposite of the impact direction
+				var velocity_diff_in_push_dir = self.velocity.dot(push_dir) - c.get_collider().linear_velocity.dot(push_dir) #The push velocity calculated by subtructing the velocity of the player from the node compared to the direction
+				c.get_collider().apply_central_force(push_dir * velocity_diff_in_push_dir * push) #Aplly the force to the node times the push force variable
 	move_and_slide()
 	update_flashlight(delta)
 	if Input.is_action_just_pressed("flashlight"):

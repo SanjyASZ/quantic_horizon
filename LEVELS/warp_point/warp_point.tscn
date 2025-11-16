@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=4 uid="uid://c6tmq6f55s8lj"]
+[gd_scene load_steps=11 format=4 uid="uid://c6tmq6f55s8lj"]
 
 [ext_resource type="Script" uid="uid://cuexphekudf5o" path="res://LEVELS/warp_point/warp_point.gd" id="1_f0hxa"]
 [ext_resource type="Texture2D" uid="uid://csbl7sai1twen" path="res://GRAPHICS/ASSETS/fantasy_rings_0.jpg" id="2_va2in"]
@@ -51,6 +51,15 @@ shadow_mesh = SubResource("ArrayMesh_kiqjl")
 [sub_resource type="BoxShape3D" id="BoxShape3D_nvaxp"]
 size = Vector3(1.6166992, 1.5283203, 1.5390625)
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yfb0n"]
+transparency = 1
+albedo_color = Color(0.6117647, 0.17254902, 0.14509805, 0.17254902)
+
+[sub_resource type="SphereMesh" id="SphereMesh_orq6r"]
+material = SubResource("StandardMaterial3D_yfb0n")
+radius = 3.0
+height = 6.0
+
 [node name="warp_point" type="RigidBody3D" groups=["fixed_translocator"]]
 freeze = true
 script = ExtResource("1_f0hxa")
@@ -71,3 +80,6 @@ shape = SubResource("BoxShape3D_nvaxp")
 
 [node name="SonarPing" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_atqch")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_orq6r")

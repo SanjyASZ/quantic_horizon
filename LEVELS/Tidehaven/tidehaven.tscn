@@ -2,21 +2,21 @@
 
 [ext_resource type="Script" uid="uid://dd8a0yr8f7iw8" path="res://LEVELS/Tidehaven/tidehaven.gd" id="1_de1lx"]
 [ext_resource type="PackedScene" uid="uid://b1puiywybi7sl" path="res://PLAYER/Player/Player.tscn" id="2_qove5"]
-[ext_resource type="Texture2D" uid="uid://sb24qw3buk0i" path="res://GRAPHICS/ASSETS/Prototype Textures/black.png" id="3_0pxvf"]
 [ext_resource type="Texture2D" uid="uid://cvtqfcxxl3d3w" path="res://GRAPHICS/ASSETS/Prototype Textures/Grey 2.png" id="4_ks8x8"]
 [ext_resource type="Texture2D" uid="uid://y5m5cn38b7eb" path="res://GRAPHICS/ASSETS/Prototype Textures/Green 3.png" id="5_3vwng"]
 [ext_resource type="Texture2D" uid="uid://u3ybdjtlu8je" path="res://GRAPHICS/ASSETS/Prototype Textures/blue 3.png" id="6_ki6o7"]
 [ext_resource type="Texture2D" uid="uid://btwg3gac4bky3" path="res://GRAPHICS/ASSETS/Prototype Textures/blue 2.png" id="7_nmkhh"]
 [ext_resource type="Texture2D" uid="uid://yadn3dlvy1ap" path="res://GRAPHICS/ASSETS/PIC/code_translocator_1.png" id="8_lgj5w"]
+[ext_resource type="Texture2D" uid="uid://doya1m3pvuh7m" path="res://GRAPHICS/ASSETS/PIC/mini_code.png" id="9_epds2"]
 [ext_resource type="PackedScene" uid="uid://rgoq0xkjypub" path="res://UI/HUD/HUD.tscn" id="10_epds2"]
 [ext_resource type="PackedScene" uid="uid://c6tmq6f55s8lj" path="res://LEVELS/warp_point/warp_point.tscn" id="11_awi0n"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_a35ol"]
 sky_top_color = Color(0.021654362, 0.0142487055, 0.091233425, 1)
-sky_horizon_color = Color(0.046553165, 0.101464026, 0.23664296, 1)
+sky_horizon_color = Color(0, 0, 0, 1)
 sky_curve = 0.10606606
 ground_bottom_color = Color(0.023529412, 0.015686275, 0.09019608, 1)
-ground_horizon_color = Color(0.047058824, 0.101960786, 0.23529412, 1)
+ground_horizon_color = Color(0, 0, 0, 1)
 
 [sub_resource type="Sky" id="Sky_bx04t"]
 sky_material = SubResource("ProceduralSkyMaterial_a35ol")
@@ -24,7 +24,7 @@ sky_material = SubResource("ProceduralSkyMaterial_a35ol")
 [sub_resource type="Environment" id="Environment_uxym8"]
 background_mode = 2
 sky = SubResource("Sky_bx04t")
-tonemap_mode = 2
+tonemap_mode = 3
 glow_enabled = true
 
 [sub_resource type="Animation" id="Animation_m4pam"]
@@ -92,11 +92,6 @@ _data = {
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mw6x0"]
 albedo_texture = ExtResource("7_nmkhh")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r6bw3"]
-albedo_texture = ExtResource("3_0pxvf")
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_wrwls"]
-
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_v3eaw"]
 albedo_texture = ExtResource("4_ks8x8")
 
@@ -112,12 +107,17 @@ albedo_texture = ExtResource("8_lgj5w")
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_awi0n"]
 albedo_texture = ExtResource("8_lgj5w")
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_d11q0"]
+albedo_texture = ExtResource("9_epds2")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_wrwls"]
+
 [node name="Tidehaven" type="Node3D"]
 script = ExtResource("1_de1lx")
 dayLengthInSeconds = 2640.0
 
 [node name="Sun" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.8660254, 0.48296267, -0.12940948, 0, -0.2588189, -0.96592534, -0.50000006, -0.8365158, 0.22414376, 0, 0, 0)
+transform = Transform3D(-0.8660254, 0.48296267, -0.12940945, 0, -0.2588189, -0.9659251, -0.50000006, -0.8365158, 0.2241437, 0, 0, 0)
 shadow_enabled = true
 directional_shadow_max_distance = 1.0
 
@@ -125,7 +125,7 @@ directional_shadow_max_distance = 1.0
 environment = SubResource("Environment_uxym8")
 
 [node name="Player" parent="." instance=ExtResource("2_qove5")]
-transform = Transform3D(-0.1, 0, -8.74228e-09, 0, 0.1, 0, 8.74228e-09, 0, -0.1, 103.938644, 60.690178, 46.90976)
+transform = Transform3D(-0.1, 0, -8.74228e-09, 0, 0.1, 0, 8.74228e-09, 0, -0.1, 103.938644, 0.35471106, 46.90976)
 base_speed = 5.0
 run_speed = 10.0
 jump_height = 1.6
@@ -180,17 +180,6 @@ size = Vector3(10, 5, 200)
 [node name="Platform_box" type="Node3D" parent="Level_block"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 76.1234, 0.050953865, 98.0759)
 
-[node name="Movable_block" type="RigidBody3D" parent="Level_block/Platform_box"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.418488, 0.5, 20.035873)
-
-[node name="CSGBox3D" type="CSGBox3D" parent="Level_block/Platform_box/Movable_block"]
-material_override = SubResource("StandardMaterial3D_r6bw3")
-use_collision = true
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Level_block/Platform_box/Movable_block"]
-transform = Transform3D(1.03, 0, 0, 0, 1.03, 0, 0, 0, 1.03, 0, 0, 0)
-shape = SubResource("BoxShape3D_wrwls")
-
 [node name="CSGBox3D2" type="CSGBox3D" parent="Level_block/Platform_box"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.346268, 5, 25.037872)
 material_override = SubResource("StandardMaterial3D_v3eaw")
@@ -242,6 +231,49 @@ size = Vector3(30, 2000, 30)
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 69.38394, -0.09123325, 35.548492)
 material_override = SubResource("StandardMaterial3D_awi0n")
 size = Vector3(0.5, 0.1, 1)
+
+[node name="House" type="Node3D" parent="Level_block"]
+
+[node name="Wallhouse" type="CSGBox3D" parent="Level_block/House"]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 105.39877, 2, 30.683374)
+material_override = SubResource("StandardMaterial3D_mw6x0")
+use_collision = true
+size = Vector3(2, 20, 30)
+
+[node name="Wallhouse2" type="CSGBox3D" parent="Level_block/House"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 85.82549, 2, 46.46267)
+material_override = SubResource("StandardMaterial3D_mw6x0")
+use_collision = true
+size = Vector3(2, 20, 30)
+
+[node name="Wallhouse3" type="CSGBox3D" parent="Level_block/House"]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 115.74952, 2, 44.652367)
+material_override = SubResource("StandardMaterial3D_mw6x0")
+use_collision = true
+size = Vector3(2, 20, 30)
+
+[node name="Wallhouse4" type="CSGBox3D" parent="Level_block/House"]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 101.683136, 2, 60.547806)
+material_override = SubResource("StandardMaterial3D_mw6x0")
+use_collision = true
+size = Vector3(2, 20, 30)
+
+[node name="Wallhouse5" type="CSGBox3D" parent="Level_block/House"]
+transform = Transform3D(-4.371139e-08, 0, -1, 1, -4.371139e-08, -4.371139e-08, -4.371139e-08, -1, 1.9106855e-15, 100.967766, 12.912277, 44.191616)
+material_override = SubResource("StandardMaterial3D_mw6x0")
+use_collision = true
+size = Vector3(2, 35.535034, 30)
+
+[node name="Movable_block" type="RigidBody3D" parent="Level_block"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 61.26625, 31.908524, 97.72981)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Level_block/Movable_block"]
+material_override = SubResource("StandardMaterial3D_d11q0")
+use_collision = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Level_block/Movable_block"]
+transform = Transform3D(1.03, 0, 0, 0, 1.03, 0, 0, 0, 1.03, 0, 0, 0)
+shape = SubResource("BoxShape3D_wrwls")
 
 [node name="Hud" parent="." instance=ExtResource("10_epds2")]
 
