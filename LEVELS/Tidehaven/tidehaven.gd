@@ -1,5 +1,7 @@
 extends Node3D
 
+signal time_updated(animationTime)
+
 @export var startTime = 6
 @export var dayLengthInSeconds:float = 24
 
@@ -82,4 +84,4 @@ func _day_change_animation():
 
 func _process(_delta: float) -> void:
 	_refresh_day_state()
-	
+	time_updated.emit(animation_player.current_animation_position)

@@ -33,7 +33,7 @@ func _process(_delta: float) -> void:
 				Player.can_throw_translocator = true
 				queue_free()
 			
-		if Input.is_action_just_pressed("cancel") and not Player.can_throw_translocator:
+		if Input.is_action_just_pressed("special_tool") and not Player.can_throw_translocator:
 			warp_vfx.emitting = true
 			ring_001_ring_1_mat_0.visible = false
 			ring_001_ring_1_mat_1.visible = false

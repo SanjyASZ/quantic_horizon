@@ -46,7 +46,7 @@ stream = ExtResource("3_k264i")
 
 [node name="LahmidiWafae2020Radioactive96646" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_326b2")
-volume_db = -10.327
+volume_db = 14.759
 parameters/looping = true
 
 [node name="ErrorSound39539" type="AudioStreamPlayer" parent="."]

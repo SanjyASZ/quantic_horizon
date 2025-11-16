@@ -39,8 +39,6 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	# Calcul mouse position
 	velocity_mouse = Input.get_last_mouse_screen_velocity()
-	if velocity_mouse != Vector2.ZERO:
-		print(Input.get_last_mouse_screen_velocity())
 	if velocity_mouse.x > 100 and velocity_mouse.x > velocity_mouse.y:
 		mouse_right = true
 		mouse_left = false
