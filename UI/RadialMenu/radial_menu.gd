@@ -16,6 +16,11 @@ extends Node2D
 
 var menu_active = false
 var is_selecting = false
+var velocity_mouse:Vector2 = Vector2()
+var mouse_right = false
+var mouse_left = false
+var mouse_up = false
+var mouse_down = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -32,6 +37,34 @@ func _ready() -> void:
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
+	# Calcul mouse position
+	velocity_mouse = Input.get_last_mouse_screen_velocity()
+	if velocity_mouse.x > 100 and velocity_mouse.x > velocity_mouse.y:
+		mouse_right = true
+		mouse_left = false
+		mouse_up = false
+		mouse_down = false
+	elif velocity_mouse.x < -100 and velocity_mouse.x < velocity_mouse.y:
+		mouse_right = false
+		mouse_left = true
+		mouse_up = false
+		mouse_down = false
+	elif velocity_mouse.y > 100 and velocity_mouse.x < velocity_mouse.y:
+		mouse_up = false
+		mouse_down = true
+		mouse_right = false
+		mouse_left = false
+	elif velocity_mouse.y < -100 and velocity_mouse.x > velocity_mouse.y:
+		mouse_up = true
+		mouse_down = false
+		mouse_right = false
+		mouse_left = false
+	else:
+		mouse_up = false
+		mouse_down = false
+		mouse_right = false
+		mouse_left = false
+		
 	# Input
 	if Input.is_action_just_pressed("radial_menu"):
 		center.visible = true
@@ -47,8 +80,7 @@ func _process(delta: float) -> void:
 		menu_active = false
 	
 	if menu_active:
-		print("MENU_ACTIVE")
-		if Input.is_action_just_pressed("joy_cam_down"):
+		if Input.is_action_just_pressed("joy_cam_down") or mouse_down:
 			translocator_icon.visible = false
 			resonograph_icon.visible = false
 			disruptor_icon.visible = true
@@ -58,7 +90,7 @@ func _process(delta: float) -> void:
 			if select.is_playing:
 				select.stop()
 			select.play()
-		elif Input.is_action_just_pressed("joy_cam_right"):
+		elif Input.is_action_just_pressed("joy_cam_right") or mouse_right:
 			translocator_icon.visible = false
 			resonograph_icon.visible = true
 			disruptor_icon.visible = false
@@ -68,7 +100,7 @@ func _process(delta: float) -> void:
 			if select.is_playing:
 				select.stop()
 			select.play()
-		elif Input.is_action_just_pressed("joy_cam_up"):
+		elif Input.is_action_just_pressed("joy_cam_up") or mouse_up:
 			translocator_icon.visible = false
 			resonograph_icon.visible = false
 			disruptor_icon.visible = false
@@ -78,7 +110,7 @@ func _process(delta: float) -> void:
 			if select.is_playing:
 				select.stop()
 			select.play()
-		elif Input.is_action_just_pressed("joy_cam_left"):
+		elif Input.is_action_just_pressed("joy_cam_left") or mouse_left:
 			translocator_icon.visible = true
 			resonograph_icon.visible = false
 			disruptor_icon.visible = false

@@ -13,3 +13,9 @@ transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0, 1
 offset_right = 40.0
 offset_bottom = 23.0
 script = ExtResource("2_sv7x4")
+
+[node name="grab_ray" type="RayCast3D" parent="Camera3D"]
+target_position = Vector3(0, 0, -3)
+
+[node name="grab_target" type="Node3D" parent="Camera3D/grab_ray"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3)

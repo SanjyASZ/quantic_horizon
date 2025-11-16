@@ -120,7 +120,7 @@ func reset_translocator_detected() -> void:
 func teleport_to_tranlocator() -> void:
 	if Input.is_action_just_pressed("special_tool") and !resonograph_tp_trigger:
 		resonograph_tp_trigger = true
-	elif Input.is_action_just_pressed("cancel") and resonograph_tp_trigger:
+	elif Input.is_action_just_pressed("special_tool") and resonograph_tp_trigger:
 		resonograph_tp_trigger = false
 		message_box_instancied = false
 		get_tree().current_scene.remove_child(message_box_inst)
@@ -143,7 +143,7 @@ func teleport_to_tranlocator() -> void:
 			message_size += 1
 			message_box_inst.messageText = message_box_inst.messageText + "◙"
 			
-		if Input.is_action_just_pressed("special_tool") and can_teleport:
+		if Input.is_action_just_pressed("trigger") and can_teleport:
 			if message_box_inst.messageText == code_translocator_3:
 				warp.pitch_scale = 0.3
 				warp.play()
@@ -151,3 +151,4 @@ func teleport_to_tranlocator() -> void:
 				# Global.all_translocator_detected[message_size][0]
 			else:
 				$ErrorSound39539.play()
+		

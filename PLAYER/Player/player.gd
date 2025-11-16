@@ -44,6 +44,21 @@ var is_time_slowed = false
 # Radial menu
 const RADIAL_MENU = preload("res://UI/RadialMenu/radial_menu.tscn")
 
+# flashlight
+@onready var flashlight: SpotLight3D = $flashlight
+var flashlight_rotation_smoothness:= 15.0
+var flashlight_position_smoothness:= 15.0
+
+# push mechanic
+@export var push = 5
+
+func update_flashlight(delta: float) -> void:
+	flashlight.global_position = self.global_position
+	flashlight.global_transform = Transform3D(
+		flashlight.global_transform.basis.slerp(camera.global_transform.basis, delta * flashlight_rotation_smoothness),
+		flashlight.global_transform.origin.slerp(camera.global_transform.origin, delta * flashlight_position_smoothness)
+	)
+
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	#await self.ready
@@ -122,7 +137,17 @@ func _physics_process(delta: float) -> void:
 	move_logic(delta)
 	jump_logic(delta)
 	_set_animation()
+	# push mechanic
+	for i in get_slide_collision_count(): #For each collision with the player
+		var c := get_slide_collision(i) #Get the colliding node
+		if c.get_collider() is RigidBody3D: #If the node hase physics
+			var push_dir = -c.get_normal() #The push direction is the oposite of the impact direction
+			var velocity_diff_in_push_dir = self.velocity.dot(push_dir) - c.get_collider().linear_velocity.dot(push_dir) #The push velocity calculated by subtructing the velocity of the player from the node compared to the direction
+			c.get_collider().apply_central_force(push_dir * velocity_diff_in_push_dir * push) #Aplly the force to the node times the push force variable
 	move_and_slide()
+	update_flashlight(delta)
+	if Input.is_action_just_pressed("flashlight"):
+		flashlight.visible = not flashlight.visible
 	if Global.tools[0]:
 		translocator_throw()
 	
