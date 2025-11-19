@@ -12,9 +12,7 @@ func _ready():
 	dialogue.next_message()
 
 func _process(_delta):
-	print(dialogue.message_id)
 	if player.flashlight.visible == true and !skip_1:
-		print("PLAY")
 		voix.stream_paused = false
 		skip_1 = true
 		dialogue.next_message()
