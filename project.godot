@@ -10,9 +10,13 @@ config_version=5
 
 [application]
 
-config/name="Quantic Horizon"
-run/main_scene="res://LEVELS/Tidehaven/tidehaven.tscn"
+config/name="Ctrl Z the past"
+run/main_scene="res://LEVELS/Gamma Sector/gamma_sector.tscn"
 config/features=PackedStringArray("4.5", "Forward Plus")
+
+[audio]
+
+general/default_playback_type.web=0
 
 [autoload]
 
@@ -25,7 +29,7 @@ window/size/mode=3
 
 [editor_plugins]
 
-enabled=PackedStringArray()
+enabled=PackedStringArray("res://addons/dialogue_label/plugin.cfg")
 
 [filesystem]
 

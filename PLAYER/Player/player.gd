@@ -61,6 +61,7 @@ func update_flashlight(delta: float) -> void:
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	flashlight.visible = false
 	#await self.ready
 
 
@@ -149,6 +150,8 @@ func _physics_process(delta: float) -> void:
 	update_flashlight(delta)
 	if Input.is_action_just_pressed("flashlight"):
 		flashlight.visible = not flashlight.visible
+	if Global.tools[2]:
+		flashlight.visible = false
 	if Global.tools[0]:
 		translocator_throw()
 	

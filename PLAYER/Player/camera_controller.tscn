@@ -1,7 +1,20 @@
 [gd_scene load_steps=3 format=3 uid="uid://u660d8xsg0qc"]
 
 [ext_resource type="Script" uid="uid://c2mxo5r1cl54a" path="res://PLAYER/Player/camera_controller.gd" id="1_afv8o"]
-[ext_resource type="Script" uid="uid://dpnta1rm87smj" path="res://UI/fps.gd" id="2_sv7x4"]
+
+[sub_resource type="GDScript" id="GDScript_s2yi3"]
+script/source = "extends Label
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(_delta: float) -> void:
+	text = str(Engine.get_frames_per_second()) + \" FPS\"
+"
 
 [node name="CameraController" type="Node3D"]
 script = ExtResource("1_afv8o")
@@ -12,7 +25,7 @@ transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0, 1
 [node name="Label" type="Label" parent="Camera3D"]
 offset_right = 40.0
 offset_bottom = 23.0
-script = ExtResource("2_sv7x4")
+script = SubResource("GDScript_s2yi3")
 
 [node name="grab_ray" type="RayCast3D" parent="Camera3D"]
 target_position = Vector3(0, 0, -3)

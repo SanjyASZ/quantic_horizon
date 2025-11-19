@@ -14,8 +14,8 @@ signal time_updated(animationTime)
 @export var afternoonColorTop: Color = Color("3d6fcd")
 @export var afternoonColorHorizon: Color = Color("e98174")
 
-@export var nightColorTop: Color = Color("000000") #090e14
-@export var nightColorHorizon: Color = Color("000000") #010049
+@export var nightColorTop: Color = Color("000000")
+@export var nightColorHorizon: Color = Color("000000")
 
 @onready var world_environment: WorldEnvironment = $WorldEnvironment
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
@@ -30,15 +30,14 @@ var dayColorList = [
 var currentDayState = 0
 var durationMultiplier = 1.0
 
+# ✅ AJOUT : Stocker le tween actuel
+var current_tween: Tween = null
+
 func _ready() -> void:
 	_change_duration()
-	
 	_set_sun()
-	
 	_set_current_state()
-	
 	_refresh_day_state()
-	
 	_day_change_animation()
 
 func _change_duration():
@@ -68,20 +67,30 @@ func _refresh_day_state():
 		_day_change_animation()
 
 func _day_change_animation():
+	# ✅ FIX : TUER le tween précédent avant d'en créer un nouveau
+	if current_tween and current_tween.is_valid():
+		current_tween.kill()
+	
+	current_tween = create_tween()
+	
 	var topColor = dayColorList[currentDayState]["top"]
 	var hoirzonColor = dayColorList[currentDayState]["horizon"]
-	var tween = create_tween()
 	
 	var duration = durationMultiplier
 	
-	tween.tween_property(world_environment, "environment:sky:sky_material:sky_top_color", topColor, duration)
-	tween.parallel()
-	tween.tween_property(world_environment, "environment:sky:sky_material:sky_horizon_color", hoirzonColor, duration)
-	tween.parallel()
-	tween.tween_property(world_environment, "environment:sky:sky_material:ground_bottom_color", topColor, duration)
-	tween.parallel()
-	tween.tween_property(world_environment, "environment:sky:sky_material:ground_horizon_color", hoirzonColor, duration)
+	current_tween.tween_property(world_environment, "environment:sky:sky_material:sky_top_color", topColor, duration)
+	current_tween.parallel()
+	current_tween.tween_property(world_environment, "environment:sky:sky_material:sky_horizon_color", hoirzonColor, duration)
+	current_tween.parallel()
+	current_tween.tween_property(world_environment, "environment:sky:sky_material:ground_bottom_color", topColor, duration)
+	current_tween.parallel()
+	current_tween.tween_property(world_environment, "environment:sky:sky_material:ground_horizon_color", hoirzonColor, duration)
 
 func _process(_delta: float) -> void:
 	_refresh_day_state()
 	time_updated.emit(animation_player.current_animation_position)
+
+# ✅ BONUS : Nettoyer à la destruction
+func _exit_tree() -> void:
+	if current_tween and current_tween.is_valid():
+		current_tween.kill()

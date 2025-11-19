@@ -3,11 +3,13 @@ extends Control
 @onready var location: Label = %Location
 @onready var time_zone: Label = %TimeZone
 @onready var time_label: Label = %Time_label
+@onready var margin_container_2: MarginContainer = $MarginContainer2
 
 var currentDate = Time.get_datetime_dict_from_datetime_string("2025-04-01T06:00:00", false)
 var lastHour = 0
 
 func _ready() -> void:
+	margin_container_2.position.x = get_viewport().get_size().x - 250
 	_refresh_display()
 
 func _refresh_display():
@@ -34,10 +36,10 @@ func _get_time_label():
 	
 
 
-func _on_tidehaven_time_updated(animationTime: Variant) -> void:
+func _on_gammasector_time_updated(animationTime: Variant) -> void:
 	var total_minutes := int(animationTime * 60)
 
-	var new_hour := total_minutes / 60
+	var new_hour := total_minutes / 60.0
 	var new_minute := total_minutes % 60
 
 	if new_hour != currentDate.hour or new_minute != currentDate.minute:

@@ -8,43 +8,60 @@ extends RigidBody3D
 @onready var translocator_index = 0
 @onready var translocator_added = false
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
+# ✅ AJOUT : Timer réutilisable au lieu de create_timer()
+var reusable_timer: Timer
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _ready() -> void:
+	# ✅ CRÉER UN SEUL TIMER RÉUTILISABLE
+	reusable_timer = Timer.new()
+	add_child(reusable_timer)
+	reusable_timer.one_shot = false
+	reusable_timer.wait_time = 0.1
+
 func _process(_delta: float) -> void:
 	if Player.can_throw_translocator_timer:
 		# verif key pressed can throw and no above collision
 		if Input.is_action_just_pressed("use_tool") and not Player.can_throw_translocator and $Area3D.get_overlapping_bodies().size() == 0:
-			warp_vfx.emitting = true
-			Player.global_position = $".".global_position + Vector3(0,0.59985,0)
-			ring_001_ring_1_mat_0.visible = false
-			ring_001_ring_1_mat_1.visible = false
-			if ! warp_sound.is_playing():
-				warp_sound.pitch_scale = 1.0
-				warp_sound.play()
-			while warp_sound.is_playing():
-				Player.can_throw_translocator_timer = false
-				Player.can_throw_translocator = false
-				await get_tree().create_timer(0.1).timeout
-			if ! warp_sound.is_playing():
-				Player.can_throw_translocator_timer = true
-				Player.can_throw_translocator = true
-				queue_free()
+			_teleport_player(1.0)
 			
 		if Input.is_action_just_pressed("special_tool") and not Player.can_throw_translocator:
-			warp_vfx.emitting = true
-			ring_001_ring_1_mat_0.visible = false
-			ring_001_ring_1_mat_1.visible = false
-			if ! warp_sound.is_playing():
-				warp_sound.pitch_scale = 2.0
-				warp_sound.play()
-			while warp_sound.is_playing():
-				Player.can_throw_translocator_timer = false
-				Player.can_throw_translocator = false
-				await get_tree().create_timer(0.1).timeout
-			if ! warp_sound.is_playing():
-				Player.can_throw_translocator_timer = true
-				Player.can_throw_translocator = true
-				queue_free()
+			_cancel_translocator(2.0)
+
+# ✅ NOUVELLE FONCTION : Éviter la duplication de code
+func _teleport_player(pitch: float) -> void:
+	warp_vfx.emitting = true
+	ring_001_ring_1_mat_0.visible = false
+	ring_001_ring_1_mat_1.visible = false
+	
+	if not warp_sound.is_playing():
+		warp_sound.pitch_scale = pitch
+		warp_sound.play()
+	
+	# ✅ ATTENDRE LA FIN DU SON (méthode plus propre)
+	Player.can_throw_translocator_timer = false
+	Player.can_throw_translocator = false
+	
+	# Téléporter le joueur si pitch == 1.0
+	if pitch == 1.0:
+		Player.global_position = self.global_position + Vector3(0, 0.59985, 0)
+	
+	# ✅ CONNECTER LE SIGNAL AU LIEU D'UNE BOUCLE WHILE
+	if not warp_sound.finished.is_connected(_on_warp_sound_finished):
+		warp_sound.finished.connect(_on_warp_sound_finished)
+
+# ✅ ALIAS pour cancel
+func _cancel_translocator(pitch: float) -> void:
+	_teleport_player(pitch)
+
+# ✅ CALLBACK PROPRE : Appelé quand le son se termine
+func _on_warp_sound_finished() -> void:
+	Player.can_throw_translocator_timer = true
+	Player.can_throw_translocator = true
+	queue_free()
+
+# ✅ IMPORTANT : Nettoyer les connexions
+func _exit_tree() -> void:
+	if warp_sound and warp_sound.finished.is_connected(_on_warp_sound_finished):
+		warp_sound.finished.disconnect(_on_warp_sound_finished)
+	if reusable_timer:
+		reusable_timer.queue_free()

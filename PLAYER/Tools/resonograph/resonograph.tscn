@@ -35,7 +35,7 @@ debug_color = Color(0.8352941, 0, 0.39215687, 0.85490197)
 
 [node name="Timer" type="Timer" parent="."]
 process_callback = 0
-wait_time = 10.0
+wait_time = 13.0
 one_shot = true
 
 [node name="DarkImpactSound" type="AudioStreamPlayer" parent="."]
@@ -46,7 +46,7 @@ stream = ExtResource("3_k264i")
 
 [node name="LahmidiWafae2020Radioactive96646" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_326b2")
-volume_db = 14.759
+volume_db = 6.092
 parameters/looping = true
 
 [node name="ErrorSound39539" type="AudioStreamPlayer" parent="."]

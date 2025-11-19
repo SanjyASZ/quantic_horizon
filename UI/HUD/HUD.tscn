@@ -1,18 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://rgoq0xkjypub"]
 
 [ext_resource type="Script" uid="uid://byqb42byevldj" path="res://UI/HUD/date_time_display.gd" id="1_0ktxb"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0ktxb"]
-bg_color = Color(0.6, 0.6, 0.6, 0.5882353)
-border_width_left = 4
-border_width_top = 4
-border_width_right = 4
-border_width_bottom = 4
-border_color = Color(0, 0, 0, 1)
-corner_radius_top_left = 15
-corner_radius_top_right = 15
-corner_radius_bottom_right = 15
-corner_radius_bottom_left = 15
+[ext_resource type="FontFile" uid="uid://cskvuwfbuag81" path="res://DIALOGUE/sector_gamma/Disket-Mono-Bold.ttf" id="2_53dev"]
 
 [node name="Hud" type="Control"]
 layout_mode = 3
@@ -46,7 +35,6 @@ theme_override_constants/margin_right = 50
 [node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/DateTimeDisplay/MarginContainer2"]
 custom_minimum_size = Vector2(200, 100)
 layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_0ktxb")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/DateTimeDisplay/MarginContainer2/PanelContainer"]
 layout_mode = 2
@@ -56,6 +44,7 @@ size_flags_vertical = 4
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/outline_size = 7
+theme_override_fonts/font = ExtResource("2_53dev")
 text = "Tidehaven"
 horizontal_alignment = 1
 
@@ -63,6 +52,7 @@ horizontal_alignment = 1
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/outline_size = 7
+theme_override_fonts/font = ExtResource("2_53dev")
 text = "ZKT+0"
 horizontal_alignment = 1
 
@@ -70,5 +60,6 @@ horizontal_alignment = 1
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/outline_size = 7
+theme_override_fonts/font = ExtResource("2_53dev")
 text = "08:00 am"
 horizontal_alignment = 1

@@ -132,7 +132,7 @@ func _process(delta: float) -> void:
 		translocator_icon.position = lerp(translocator_icon.position, Vector2(0, 0), 8 * delta)
 		disruptor_icon.position = lerp(disruptor_icon.position, Vector2(0,0), 8 * delta)
 		hand_icon.position = lerp(hand_icon.position, Vector2(0,0), 8 * delta)
-	if resonograph_icon.position.distance_to(Vector2(0,0)) <= offset_x / 16:
+	if !menu_active and resonograph_icon.position.distance_to(Vector2(0,0)) <= offset_x / 16:
 		center.visible = false
 		resonograph_icon.visible = false
 		translocator_icon.visible = false

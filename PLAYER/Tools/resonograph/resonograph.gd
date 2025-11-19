@@ -1,9 +1,9 @@
 extends Node3D
 @onready var mesh_instance_3d: MeshInstance3D = $MeshInstance3D
-@onready var time_start: float = 0
-@onready var elapsed_time: float = 0
+@onready var time_start: float = 0.0
+@onready var elapsed_time: float = 0.0
 @onready var current_radius: float = 0.5
-@onready var time_now: float = 0
+@onready var time_now: float = 0.0
 @onready var sphere_mesh = mesh_instance_3d.mesh
 @onready var on_going_scan:bool = false
 @onready var current_transparency: float  = 1.0
@@ -25,18 +25,10 @@ var can_teleport: bool = false
 var play_detect_sfx: bool = false
 
 var code_translocator_3 = "○•◙◘◙•○◙◘○•◘◙○"
-# •  ◘  ○  ◙
-# G  D  H  B
 
-#○•◙◘◙•○◙◘○•◘◙○
-
-#HGBDBGHBDHGDBH
-
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	mesh_instance_3d.visible = false
 
-# Don't forget to turn off back-face culling of interior sphere shape won't work
 func _process(delta: float) -> void:
 	if Global.tools[1]:
 		activate_resonograph(delta)
@@ -76,8 +68,7 @@ func activate_resonograph(delta):
 					
 		# 3d animation for scan
 		var increment = elapsed_time / 3.0 * delta
-		#var increment = delta
-		var target_radius = 30000.0 # /10 pour avoir en m
+		var target_radius = 30000.0
 		current_radius = lerp(current_radius, target_radius, increment)
 		sphere_mesh.set_radius(current_radius)
 		sphere_mesh.set_height(current_radius*2)
@@ -86,17 +77,20 @@ func activate_resonograph(delta):
 		sphere_mesh.material.albedo_color.a = current_transparency
 		
 	# resonograph end of dectection
-	if elapsed_time >= 3 and elapsed_time <= 9.7:
+	if elapsed_time >= 3 and elapsed_time <= $Timer.wait_time - 0.1:
 		can_teleport = true
 		on_going_scan = false
 		sphere_mesh.set_radius(0.5)
 		sphere_mesh.set_height(1.0)
 		current_radius = 0.5
 		current_transparency = 1.0
-		if play_detect_sfx and can_teleport:
+		if !wave_resonograph_sound.is_playing() and resonograph_tp_trigger:
 			wave_resonograph_sound.play()
-			play_detect_sfx = false
-	elif elapsed_time >=  9.7:
+		elif wave_resonograph_sound.is_playing() and !resonograph_tp_trigger:
+			wave_resonograph_sound.stop()
+	elif elapsed_time >= $Timer.wait_time - 0.1:
+		if wave_resonograph_sound.is_playing() and resonograph_tp_trigger:
+			wave_resonograph_sound.stop()
 		can_teleport = false
 	
 func _on_timer_timeout() -> void:
@@ -123,7 +117,11 @@ func teleport_to_tranlocator() -> void:
 	elif Input.is_action_just_pressed("special_tool") and resonograph_tp_trigger:
 		resonograph_tp_trigger = false
 		message_box_instancied = false
-		get_tree().current_scene.remove_child(message_box_inst)
+		# ✅ FIX : Libérer la mémoire AVANT de retirer
+		if message_box_inst:
+			message_box_inst.queue_free()
+			message_box_inst = null
+			
 	if resonograph_tp_trigger:
 		if ! message_box_instancied:
 			message_size = 0
@@ -148,7 +146,10 @@ func teleport_to_tranlocator() -> void:
 				warp.pitch_scale = 0.3
 				warp.play()
 				Player.global_position = Vector3(163,2000,128)
-				# Global.all_translocator_detected[message_size][0]
 			else:
 				$ErrorSound39539.play()
-		
+
+# ✅ BONUS : Nettoyer à la destruction
+func _exit_tree() -> void:
+	if message_box_inst:
+		message_box_inst.queue_free()
