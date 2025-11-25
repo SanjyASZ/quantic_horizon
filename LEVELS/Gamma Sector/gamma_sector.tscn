@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://doicpig71avvk"]
+[gd_scene load_steps=32 format=3 uid="uid://doicpig71avvk"]
 
 [ext_resource type="Script" uid="uid://dd8a0yr8f7iw8" path="res://LEVELS/Gamma Sector/gamma_sector.gd" id="1_a2b7h"]
 [ext_resource type="PackedScene" uid="uid://b1puiywybi7sl" path="res://PLAYER/Player/Player.tscn" id="2_obnjv"]
@@ -118,61 +118,6 @@ albedo_texture = ExtResource("8_pceaf")
 albedo_texture = ExtResource("9_ivryr")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_wrwls"]
-
-[sub_resource type="Animation" id="Animation_pceaf"]
-resource_name = "start_dialogue"
-length = 60.0
-tracks/0/type = "audio"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("TutorialPart1")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"clips": [],
-"times": PackedFloat32Array()
-}
-tracks/0/use_blend = true
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("TutorialPart1:playing")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-tracks/2/type = "method"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath(".")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(21.066668, 31.766666, 46.333332, 58.6),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"values": [{
-"args": [],
-"method": &"startD3"
-}, {
-"args": [],
-"method": &"startD4"
-}, {
-"args": [],
-"method": &"pause"
-}, {
-"args": [],
-"method": &"startD6"
-}]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_ivryr"]
-_data = {
-&"start_dialogue": SubResource("Animation_pceaf")
-}
 
 [node name="GammaSector" type="Node3D"]
 script = ExtResource("1_a2b7h")
@@ -375,25 +320,19 @@ I support custom tags:
 scroll_active = false
 scroll_following = true
 script = ExtResource("14_d26gn")
-messages = Array[String](["[snd 0][spd 0.3]///initialization ...[wait 60]", "[inst 4]done[wait 60] ", "[b][spd 0.1] Bienvenue, Régulateur-3. Je suis Sigma-47 votre instructrice pour ce protocole de certification opérationnelle.
+messages = Array[String](["[snd 0][spd 0.3]///initialization ...[wait 60]", "[inst 4]done[wait 60] ", "[b][spd 0.15] Bienvenue, Régulateur-3. Je suis Sigma-47 votre instructrice pour ce protocole de certification opérationnelle.
 Vous avez été assemblé dans le cadre du Projet Control Z The Past - Phase 4.
 Votre fonction : Identifier et corriger les anomalies qui entravent la transmission des données de l’ordinateur quantique.
-[/b]", "[b][spd 0.1]
+[/b] [wait 120]", "[b][spd 0.15]
 Avant d'être déployé sur le terrain, vous devez démontrer votre maîtrise des systèmes intégrés. Un échec entraînera votre... reconditionnement.
 Commençons.
-[/b] [wait 60] ", "[b][spd 0.1]Nos infrastructures actuelles fonctionnent avec une énergie minimale. L'obscurité est omniprésente. Votre émetteur photonique intégré - autrement dit votre lampe torche de luxe - est essentiel pour naviguer dans les secteurs non alimentés.
+[/b] [wait 120]", "[b][spd 0.15]Nos infrastructures actuelles fonctionnent avec une énergie minimale. L'obscurité est omniprésente. Votre émetteur photonique intégré - autrement dit votre lampe torche de luxe - est essentiel pour naviguer dans les secteurs non alimentés.
 [/b]
-Objectif : Activez votre lampe torche (F) et éclairez vos environs.", "[b][spd 0.2] Ne vous inquiètez pas votre batterie est quasi illimitée. Vous pouvez donc briller comme un sapin de Noël sous stéroïde.Attention cependant les zones sombres abritent parfois... des imprévus.[/b]", "return 0"])
+Objectif : Activez votre lampe torche (F) et éclairez vos environs. [wait 120]", "[b][spd 0.15] Ne vous inquiètez pas votre batterie est quasi illimitée. Vous pouvez donc briller comme un sapin de Noël sous stéroïde.Attention cependant les zones sombres abritent parfois... des imprévus.[/b] [wait 120]", "return 0"])
 sound_files = Array[AudioStream]([ExtResource("15_yswh1"), ExtResource("16_hyl4w")])
 
 [node name="TutorialPart1" type="AudioStreamPlayer" parent="Dialogue"]
 stream = ExtResource("17_pceaf")
-volume_db = 2.08
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Dialogue"]
-libraries = {
-&"": SubResource("AnimationLibrary_ivryr")
-}
 
 [connection signal="time_updated" from="." to="Hud/CanvasLayer/DateTimeDisplay" method="_on_gammasector_time_updated"]
 [connection signal="dialogue_ended" from="Dialogue/Dialogue" to="Dialogue" method="onDialogueEnded"]
