@@ -1,0 +1,85 @@
+[gd_scene load_steps=9 format=3 uid="uid://ds1yp36byrv1q"]
+
+[ext_resource type="Script" uid="uid://d18q3sog2rryc" path="res://LEVELS/Gamma Sector/tutorial_part_2.gd" id="1_jiidd"]
+[ext_resource type="FontFile" uid="uid://bdyywwrgm87al" path="res://DIALOGUE/sector_gamma/Disket-Mono-Regular.ttf" id="2_5faa5"]
+[ext_resource type="FontFile" uid="uid://cskvuwfbuag81" path="res://DIALOGUE/sector_gamma/Disket-Mono-Bold.ttf" id="3_kug12"]
+[ext_resource type="Script" uid="uid://dngbcktn3dm3" path="res://addons/dialogue_label/src/DialogueLabel.gd" id="4_0krtt"]
+[ext_resource type="AudioStream" uid="uid://bm8f1356nomlx" path="res://DIALOGUE/sector_gamma/click1.wav" id="5_uerur"]
+[ext_resource type="AudioStream" uid="uid://bvwbyckswmjec" path="res://DIALOGUE/sector_gamma/click2.wav" id="6_axrwm"]
+[ext_resource type="AudioStream" uid="uid://qwwivn4xfpcl" path="res://DIALOGUE/sector_gamma/Tutorial_PART_2.mp3" id="7_jhupu"]
+[ext_resource type="AudioStream" uid="uid://tgvdb6hkdox4" path="res://DIALOGUE/sector_gamma/Tutorial_PART_3.mp3" id="8_n6obg"]
+
+[node name="Dialogue2" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_jiidd")
+
+[node name="Dialogue2" type="RichTextLabel" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = -20.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/normal_font = ExtResource("2_5faa5")
+theme_override_fonts/bold_font = ExtResource("3_kug12")
+theme_override_fonts/mono_font = ExtResource("2_5faa5")
+text = "Hello! i am a simple RichTextLabel extension for displaying dialogues!
+
+I support custom tags:
+[spd 1.5] - change text speed to 1.5 symbols/frame
+[inst 5]  - instantly display next 5 symbols
+[snd 0]   - choose first sound bite in sound bite list
+[wait 60] - delay for 60 frames"
+scroll_active = false
+scroll_following = true
+script = ExtResource("4_0krtt")
+messages = Array[String](["[snd 0][spd 0.3]///initialization ...[wait 60]", "[inst 4]done[wait 60] ", "[b][spd 0.2]
+Le Projet Quantic Horizon repose sur des technologies de flux temporel. 
+Le disrupteur est l’une de nos premières avancées. Celui ci altère l’espace-temps. 
+Ce qui est rapide pourra vous paraître lent et inversement. Rendez vous à 8h00 du matin… Vous y verrez plus clair.
+Maintenez (A) puis sélectionner le disrupteur. (Clic gauche) pour utiliser l'outil. (clic droit) pour annuler le Disrupteur. 
+Objectif : Rendez vous à 8H00 du matin.
+[/b] [wait 120]", "[b][spd 0.15]
+Passons au Translocateur
+Il projette un marqueur spatial. Une fois placé, vous pouvez instantanément transférer votre structure moléculaire vers cette position. 
+Distance maximale : 30 mètres. Précision : absolue.
+Maintenez (A) puis sélectionner le translocateur. (Clic gauche) pour utiliser l'outil. (clic droit) pour annuler.
+Ojbectif:  Montez sur la plus haute plateforme flottante.
+[/b] [wait 120]", "[b][spd 0.15] 
+Parfait. Aucune anomalie moléculaire détectée. Vous êtes toujours vous. Ou dumoins une version de vous qui n’a pas fusionné avec un mur. 
+Ce qui est globalement positif.
+[wait 120]", "[spd 0.15] 
+Vous êtes doté d’un exosquelette humanoïde. Mais ne vous en faites pas. Votre force physique est 100 fois supérieure à celle des humains. 
+Essayez donc de déplacer le cube devant pour le faire tomber de la plateforme.
+Maintenez (A) et sélectionner la main pour saisir et intéragir avec les objets.
+Objectif: faites tomber le cube de sa platforme
+[wait 120]", "[spd 0.2]
+Les données que nous devons transmettre au passé transitent par des zones de distorsion quantique les Warp Zones.
+Le Résonograph dont vous êtes doté scanne l'environnement et révèle ces anomalies et bip à chaque détection.
+Distance de scan maximale : 2 km. 
+Après le scan vous avez un délai de 10 secondes pour pouvoir activer la transportation. 
+Pas le temps pour un café ou une courte crise existentielle.", "[spd 0.2]
+Scanner et détecter la warp zone situé sur la tour. 
+Vous trouverez les coordonnées de la warp zone en face même de la tour. 
+Objectif : Equipez vous du résonograph. Scannez avec (clic gauche) puis (clic droite) pour ouvrir le panneau des coordonnées. Insérez les coordonnées et appuyez sur (Entrée).", "Super, regulateur-3 vos performances sont jusqu’ici très convaincantes.
+Sachez que la tour sur laquelle vous vous situez permet d'amplifier et d'étendre la zone de scan de votre résonograph à 400 km.", "Voici donc venir votre dernier test.
+Les coordonnées du satellite sont cachées dans le secteur. Trouvez-les et téléportez-vous au satellite pour débuter votre mission.
+Objectif: Téléportez vous au satellite"])
+sound_files = Array[AudioStream]([ExtResource("5_uerur"), ExtResource("6_axrwm")])
+
+[node name="TutorialPart2" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_jhupu")
+
+[node name="TutorialPart3" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_n6obg")
+
+[connection signal="dialogue_ended" from="Dialogue2" to="." method="onDialogueEnded"]

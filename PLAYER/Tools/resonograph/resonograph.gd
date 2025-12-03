@@ -26,6 +26,7 @@ var play_detect_sfx: bool = false
 
 var code_translocator_3 = "○•◙◘◙•○◙◘○•◘◙○"
 
+
 func _ready() -> void:
 	mesh_instance_3d.visible = false
 

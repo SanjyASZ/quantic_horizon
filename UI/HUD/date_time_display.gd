@@ -38,14 +38,14 @@ func _get_time_label():
 
 func _on_gammasector_time_updated(animationTime: Variant) -> void:
 	var total_minutes := int(animationTime * 60)
-
 	var new_hour := total_minutes / 60.0
 	var new_minute := total_minutes % 60
 
 	if new_hour != currentDate.hour or new_minute != currentDate.minute:
+		Global.time_hour = new_hour
 		currentDate.hour = new_hour
 		currentDate.minute = new_minute
-
+		
 		_refresh_display()
  
 #0c1a3c

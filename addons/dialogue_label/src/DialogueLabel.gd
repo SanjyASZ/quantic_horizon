@@ -5,11 +5,10 @@ class_name DialogueLabel
 @export var sound_files:Array[AudioStream] = []
 @export var text_speed = 0.5
 
-
 signal dialogue_started
 signal message_next
 signal dialogue_ended
-signal message_finished
+#signal message_finished
 
 var active = false
 var message_id = 0
@@ -128,7 +127,7 @@ func _advance_text():
 		
 	if visible_ratio >= 1:
 		active = false
-		emit_signal("message_finished")
+		#emit_signal("message_finished")
 		return
 	
 	chars_to_display+=text_speed

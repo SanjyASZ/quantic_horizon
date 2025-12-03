@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://doicpig71avvk"]
+[gd_scene load_steps=36 format=3 uid="uid://doicpig71avvk"]
 
 [ext_resource type="Script" uid="uid://dd8a0yr8f7iw8" path="res://LEVELS/Gamma Sector/gamma_sector.gd" id="1_a2b7h"]
 [ext_resource type="PackedScene" uid="uid://b1puiywybi7sl" path="res://PLAYER/Player/Player.tscn" id="2_obnjv"]
@@ -10,6 +10,8 @@
 [ext_resource type="Texture2D" uid="uid://yadn3dlvy1ap" path="res://GRAPHICS/ASSETS/PIC/code_translocator_1.png" id="8_pceaf"]
 [ext_resource type="Texture2D" uid="uid://doya1m3pvuh7m" path="res://GRAPHICS/ASSETS/PIC/mini_code.png" id="9_ivryr"]
 [ext_resource type="PackedScene" uid="uid://rgoq0xkjypub" path="res://UI/HUD/HUD.tscn" id="10_d26gn"]
+[ext_resource type="Script" uid="uid://c0dpc18in7isb" path="res://LEVELS/Gamma Sector/area_3d.gd" id="10_ivryr"]
+[ext_resource type="Script" uid="uid://cuf4dpk3nmxtv" path="res://LEVELS/Gamma Sector/tower.gd" id="11_d26gn"]
 [ext_resource type="Script" uid="uid://hovcr10ffc2d" path="res://DIALOGUE/sector_gamma/dialogue_tutorial.gd" id="11_sjlq0"]
 [ext_resource type="FontFile" uid="uid://bdyywwrgm87al" path="res://DIALOGUE/sector_gamma/Disket-Mono-Regular.ttf" id="12_pceaf"]
 [ext_resource type="FontFile" uid="uid://cskvuwfbuag81" path="res://DIALOGUE/sector_gamma/Disket-Mono-Bold.ttf" id="13_ivryr"]
@@ -96,14 +98,21 @@ _data = {
 &"day_and_night": SubResource("Animation_jbvne")
 }
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pceaf"]
+albedo_texture = ExtResource("4_x2e14")
+uv1_triplanar = true
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mw6x0"]
 albedo_texture = ExtResource("4_x2e14")
+uv1_triplanar = true
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_v3eaw"]
 albedo_texture = ExtResource("5_dyvbl")
+uv1_triplanar = true
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dd21d"]
 albedo_texture = ExtResource("6_7n02q")
+uv1_triplanar = true
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gfxm2"]
 albedo_texture = ExtResource("7_sjlq0")
@@ -119,6 +128,9 @@ albedo_texture = ExtResource("9_ivryr")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_wrwls"]
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_yswh1"]
+radius = 3.0
+
 [node name="GammaSector" type="Node3D"]
 script = ExtResource("1_a2b7h")
 dayLengthInSeconds = 2640.0
@@ -131,7 +143,7 @@ directional_shadow_max_distance = 1.0
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_uxym8")
 
-[node name="Player" parent="." instance=ExtResource("2_obnjv")]
+[node name="Player" parent="." groups=["player"] instance=ExtResource("2_obnjv")]
 transform = Transform3D(-0.1, 0, -8.74228e-09, 0, 0.1, 0, 8.74228e-09, 0, -0.1, 103.938644, 0.35471106, 46.90976)
 base_speed = 5.0
 run_speed = 10.0
@@ -151,8 +163,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 64.76137, 3.4139304, 264.7677
 [node name="warp_zone_3" parent="." instance=ExtResource("3_vr45x")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 166.869, 2000, 128.01)
 
-[node name="floor" type="CSGBox3D" parent="."]
+[node name="floor" type="CSGBox3D" parent="." groups=["floor"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 100, -1, 100)
+material_override = SubResource("StandardMaterial3D_pceaf")
 use_collision = true
 size = Vector3(200, 1, 200)
 
@@ -282,6 +295,20 @@ use_collision = true
 transform = Transform3D(1.03, 0, 0, 0, 1.03, 0, 0, 0, 1.03, 0, 0, 0)
 shape = SubResource("BoxShape3D_wrwls")
 
+[node name="Area3D" type="Area3D" parent="Level_block/Movable_block"]
+script = ExtResource("10_ivryr")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Level_block/Movable_block/Area3D"]
+shape = SubResource("SphereShape3D_yswh1")
+
+[node name="Area3D" type="Area3D" parent="Level_block"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 168.34856, 1997.731, 128.74469)
+script = ExtResource("11_d26gn")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Level_block/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.0102539, 0)
+shape = SubResource("SphereShape3D_yswh1")
+
 [node name="Hud" parent="." instance=ExtResource("10_d26gn")]
 
 [node name="Location" parent="Hud/CanvasLayer/DateTimeDisplay/MarginContainer2/PanelContainer/VBoxContainer" index="0"]
@@ -336,6 +363,5 @@ stream = ExtResource("17_pceaf")
 
 [connection signal="time_updated" from="." to="Hud/CanvasLayer/DateTimeDisplay" method="_on_gammasector_time_updated"]
 [connection signal="dialogue_ended" from="Dialogue/Dialogue" to="Dialogue" method="onDialogueEnded"]
-[connection signal="message_finished" from="Dialogue/Dialogue" to="Dialogue" method="onMessageFinished"]
 
 [editable path="Hud"]
