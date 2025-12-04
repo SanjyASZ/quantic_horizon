@@ -12,5 +12,4 @@ func _on_body_entered(body: Node3D) -> void:
 	if body.is_in_group("floor"):
 		if Global.cube_detect_player:
 			Global.tutorial_cube = true
-			print("FREE CUBE AREA")
 			queue_free()

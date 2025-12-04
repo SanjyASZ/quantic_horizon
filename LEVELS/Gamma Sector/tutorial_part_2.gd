@@ -41,7 +41,6 @@ func _process(_delta):
 	if voix.get_playback_position() > 56.25 and !wait and dialogue.message_id == 4:
 		dialogue.next_message()
 	
-	print(Global.tutorial_cube)
 	if !voix.is_playing() and Global.tutorial_cube and dialogue.message_id == 5:
 		dialogue.next_message()
 		voix_final.play()
