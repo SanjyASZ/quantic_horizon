@@ -23,6 +23,10 @@ var tutorial_cube:= false
 var tutorial_tour:= false
 var cube_detect_player := false
 
+# Satellite
+var satellite_visible = false
+var tower_amplification = false
+
 func _process(_delta):
 	if !radial_menu_instanciated and !is_time_altered:
 		radial_menu = RADIAL_MENU.instantiate()

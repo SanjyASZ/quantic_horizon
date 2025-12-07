@@ -24,7 +24,9 @@ var message_size: int = 0
 var can_teleport: bool = false
 var play_detect_sfx: bool = false
 
-var code_translocator_3 = "○•◙◘◙•○◙◘○•◘◙○"
+var code_warp_3 = "○•◙◘◙•○◙◘○•◘◙○"
+var code_warp = "○•◙"
+var code_satellite = "○○○○◙○○○○○"
 # HGBDBGHBDHGDBH
 
 func _ready() -> void:
@@ -143,10 +145,21 @@ func teleport_to_tranlocator() -> void:
 			message_box_inst.messageText = message_box_inst.messageText + "◙"
 			
 		if Input.is_action_just_pressed("trigger") and can_teleport:
-			if message_box_inst.messageText == code_translocator_3:
+			if message_box_inst.messageText == code_warp:
+				warp.pitch_scale = 0.3
+				warp.play()
+				Player.global_position = Vector3(113.0,1.7,85)
+			if message_box_inst.messageText == code_warp_3:
 				warp.pitch_scale = 0.3
 				warp.play()
 				Player.global_position = Vector3(163,2000,128)
+			elif Global.satellite_visible and message_box_inst.messageText == code_satellite:
+				if Global.tower_amplification and message_box_inst.messageText == code_satellite:
+					warp.pitch_scale = 0.1
+					warp.play()
+					Player.global_position = Vector3(-1000,-1000,0)
+					get_tree().change_scene_to_file("res://LEVELS/Satellite/satellite.tscn")
+					
 			else:
 				$ErrorSound39539.play()
 

@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://dg7fljewbskm"]
 
-[ext_resource type="AudioStream" uid="uid://csfojmq43lxpr" path="res://AUDIO/MUSIC/the-mystery-of-science-285291.mp3" id="1_7aa7e"]
+[ext_resource type="AudioStream" uid="uid://cxhoogs3la2a" path="res://AUDIO/MUSIC/sci-fi-moodtimeflow-194382.mp3" id="1_7aa7e"]
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer"]
 stream = ExtResource("1_7aa7e")

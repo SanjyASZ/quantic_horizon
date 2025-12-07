@@ -43,7 +43,7 @@ scroll_active = false
 scroll_following = true
 script = ExtResource("4_0krtt")
 messages = Array[String](["[snd 0][spd 0.3]///initialization ...[wait 60]", "[inst 4]done[wait 60] ", "[b][spd 0.2]
-Le Projet Quantic Horizon repose sur des technologies de flux temporel. 
+Le Projet Ctrl Z repose sur des technologies de flux temporel. 
 Le disrupteur est l’une de nos premières avancées. Celui ci altère l’espace-temps. 
 Ce qui est rapide pourra vous paraître lent et inversement. Rendez vous à 8h00 du matin… Vous y verrez plus clair.
 Maintenez (A) puis sélectionner le disrupteur. (Clic gauche) pour utiliser l'outil. (clic droit) pour annuler le Disrupteur. 
@@ -70,7 +70,8 @@ Après le scan vous avez un délai de 10 secondes pour pouvoir activer la transp
 Pas le temps pour un café ou une courte crise existentielle.", "[spd 0.2]
 Scanner et détecter la warp zone situé sur la tour. 
 Vous trouverez les coordonnées de la warp zone en face même de la tour. 
-Objectif : Equipez vous du résonograph. Scannez avec (clic gauche) puis (clic droite) pour ouvrir le panneau des coordonnées. Insérez les coordonnées et appuyez sur (Entrée).", "Super, regulateur-3 vos performances sont jusqu’ici très convaincantes.
+Objectif : Equipez vous du résonograph. Scannez avec (clic gauche) puis (clic droite) pour ouvrir le panneau des coordonnées. 
+Insérez les coordonnées avec les touches fléchées et appuyez sur (Entrée) pour valider.", "Super, regulateur-3 vos performances sont jusqu’ici très convaincantes.
 Sachez que la tour sur laquelle vous vous situez permet d'amplifier et d'étendre la zone de scan de votre résonograph à 400 km.", "Voici donc venir votre dernier test.
 Les coordonnées du satellite sont cachées dans le secteur. Trouvez-les et téléportez-vous au satellite pour débuter votre mission.
 Objectif: Téléportez vous au satellite"])

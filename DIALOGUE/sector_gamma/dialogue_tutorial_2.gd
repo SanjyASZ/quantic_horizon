@@ -7,7 +7,6 @@ var skip = false
 
 func _process(_delta):
 	if Global.start_D2 and !skip:
-		print("INSIDE")
 		dialogue.start_dialogue()
 		animation_player.play("start_dialogue_2")
 		voix.play()

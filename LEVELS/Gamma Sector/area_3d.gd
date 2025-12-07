@@ -10,6 +10,4 @@ func _on_body_entered(body: Node3D) -> void:
 		Global.tutorial_platform = true
 		Global.cube_detect_player = true
 	if body.is_in_group("floor"):
-		if Global.cube_detect_player:
-			Global.tutorial_cube = true
-			queue_free()
+		Global.tutorial_cube = true

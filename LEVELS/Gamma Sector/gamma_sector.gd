@@ -21,11 +21,11 @@ signal time_updated(animationTime)
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 
 # Satellite 
-@export var satellite_start_time: float = 10.0  # 15h00 = 3PM
-@export var satellite_duration: float = 0.5   # 20 minutes = 20/60 heures
+@export var satellite_start_time: float = 10.0
+@export var satellite_duration: float = 0.5   # 30 minutes = 0.5 heures
 @export var satellite_color: Color = Color.BLACK
-@export var satellite_size: float = 0.8  # Taille du point noir
-@export var satellite_fade_duration: float = 0.03  # ✅ NOUVEAU : 2 minutes = 2/60 heures
+@export var satellite_size: float = 0.8
+@export var satellite_fade_duration: float = 0.03
 @onready var satellite: Sprite3D = null
 
 var dayDuration = 24
@@ -38,10 +38,9 @@ var dayColorList = [
 var currentDayState = 0
 var durationMultiplier = 1.0
 
-# ✅ AJOUT : Stocker le tween actuel
 var current_tween: Tween = null
-var satellite_tween: Tween = null  # ✅ Tween séparé pour le satellite
-var satellite_fade_tween: Tween = null  # ✅ NOUVEAU : Tween pour le fade
+var satellite_tween: Tween = null
+var satellite_fade_tween: Tween = null
 
 func _ready() -> void:
 	_change_duration()
@@ -50,64 +49,67 @@ func _ready() -> void:
 	_refresh_day_state()
 	_day_change_animation()
 	_create_satellite()
+	
+	# ✅ Configurer l'animation pour boucler
+	var animation = animation_player.get_animation("day_and_night")
+	if animation:
+		animation.loop_mode = Animation.LOOP_LINEAR
 
 func _create_satellite():
-	# ✅ Créer un Sprite3D pour un point noir simple
 	satellite = Sprite3D.new()
 	
-	# Créer une texture : petit cercle noir
 	var image = Image.create(64, 64, false, Image.FORMAT_RGBA8)
 	image.fill(Color.TRANSPARENT)
 	
-	# Dessiner un cercle noir
 	for x in range(64):
 		for y in range(64):
 			var dx = x - 32
 			var dy = y - 32
 			var distance = sqrt(dx*dx + dy*dy)
-			if distance < 28:  # Rayon du cercle
+			if distance < 28:
 				image.set_pixel(x, y, satellite_color)
 	
 	satellite.texture = ImageTexture.create_from_image(image)
 	
-	# Configuration du sprite
-	satellite.billboard = BaseMaterial3D.BILLBOARD_ENABLED  # Face toujours la caméra
-	satellite.shaded = false  # Pas affecté par la lumière
-	satellite.pixel_size = 0.0000001 * 0.4  # ✅ NOUVEAU : Commence minuscule
+	satellite.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	satellite.shaded = false
+	satellite.pixel_size = 0.0000001 * 0.4
 	satellite.modulate = satellite_color
 	
-	# ✅ Ajouter comme enfant de Sun pour suivre sa rotation
 	$Sun.add_child(satellite)
 	
-	# ✅ Position TRÈS LOIN dans la direction opposée à la lumière
-	# (là où le soleil visuel du sky shader apparaît)
 	satellite.position = Vector3(0, 0, -500)
 	
-	# Cacher au départ
 	satellite.visible = false
-	
-	print("🛰️ Satellite créé (Sprite3D)")
+	Global.satellite_visible = false
 
 func _update_satellite_visibility():
 	if not satellite:
 		return
-		
-	var current_time = animation_player.current_animation_position
+	
+	# ✅ Normaliser le temps entre 0-24
+	var current_time = fmod(animation_player.current_animation_position, 24.0)
+	if current_time < 0:
+		current_time += 24.0
+	
 	var end_time = satellite_start_time + satellite_duration
 	
-	# Afficher uniquement pendant la fenêtre de temps
-	if current_time >= satellite_start_time and current_time < end_time:
+	# ✅ FIX PRINCIPAL : Mettre à jour Global.satellite_visible selon la fenêtre de temps
+	var should_be_visible = (current_time >= satellite_start_time and current_time < end_time)
+	
+	# ✅ Mettre à jour immédiatement le Global
+	Global.satellite_visible = should_be_visible
+	
+	# Gérer l'affichage visuel
+	if should_be_visible:
 		if not satellite.visible:
-			print("✅ Satellite VISIBLE à ", current_time, "h")
 			satellite.visible = true
-			_animate_satellite()  # Démarrer l'animation
-			_fade_in_satellite()  # ✅ NOUVEAU : Fade in par taille
+			_animate_satellite()
+			_fade_in_satellite()
 	else:
 		if satellite.visible:
-			print("❌ Satellite CACHÉ")
-			_fade_out_satellite()  # ✅ NOUVEAU : Fade out par taille
+			_fade_out_satellite()
 
-# ✅ NOUVELLE FONCTION : Apparition progressive (taille 0.0000001 → 0.8)
 func _fade_in_satellite():
 	if satellite_fade_tween and satellite_fade_tween.is_valid():
 		satellite_fade_tween.kill()
@@ -118,7 +120,6 @@ func _fade_in_satellite():
 	satellite.pixel_size = 0.0000001 * 0.4
 	satellite_fade_tween.tween_property(satellite, "pixel_size", satellite_size * 0.4, fade_duration)
 
-# ✅ NOUVELLE FONCTION : Disparition progressive (taille 0.8 → 0.0000001)
 func _fade_out_satellite():
 	if satellite_fade_tween and satellite_fade_tween.is_valid():
 		satellite_fade_tween.kill()
@@ -130,24 +131,17 @@ func _fade_out_satellite():
 	satellite_fade_tween.tween_callback(func(): satellite.visible = false)
 
 func _animate_satellite():
-	# ✅ Tuer le tween précédent du satellite
 	if satellite_tween and satellite_tween.is_valid():
 		satellite_tween.kill()
 	
 	satellite_tween = create_tween()
 	var duration = satellite_duration * durationMultiplier
 	
-	# ✅ Trajectoire qui traverse le soleil (coordonnées relatives au Sun)
-	# X : gauche à droite
-	# Y : peut ajouter une composante verticale
-	# Z : reste à -500 (loin, devant le soleil du sky)
-	var start_pos = Vector3(500, 5000, 300)   # Haut gauche
-	var end_pos = Vector3(-500, 4000, -300)     # Bas droite
+	var start_pos = Vector3(500, 5000, 300)
+	var end_pos = Vector3(-500, 4000, -300)
 	
 	satellite.position = start_pos
 	satellite_tween.tween_property(satellite, "position", end_pos, duration)
-	
-	print("🎬 Animation satellite : ", duration, " secondes réelles")
 
 func _change_duration():
 	durationMultiplier = dayLengthInSeconds/24
@@ -166,9 +160,13 @@ func _set_current_state():
 func _refresh_day_state():
 	var newState = false
 	
+	var current_time = fmod(animation_player.current_animation_position, 24.0)
+	if current_time < 0:
+		current_time += 24.0
+	
 	for i in dayColorList.size():
 		var sameState = i == currentDayState
-		if not sameState and animation_player.current_animation_position > dayColorList[i].startTime:
+		if not sameState and current_time > dayColorList[i].startTime:
 			currentDayState = i
 			newState = true
 			
@@ -176,7 +174,6 @@ func _refresh_day_state():
 		_day_change_animation()
 
 func _day_change_animation():
-	# ✅ FIX : TUER le tween précédent avant d'en créer un nouveau
 	if current_tween and current_tween.is_valid():
 		current_tween.kill()
 	
@@ -198,13 +195,15 @@ func _day_change_animation():
 func _process(_delta: float) -> void:
 	_refresh_day_state()
 	_update_satellite_visibility()
-	time_updated.emit(animation_player.current_animation_position)
+	var normalized_time = fmod(animation_player.current_animation_position, 24.0)
+	if normalized_time < 0:
+		normalized_time += 24.0
+	time_updated.emit(normalized_time)
 
-# ✅ BONUS : Nettoyer à la destruction
 func _exit_tree() -> void:
 	if current_tween and current_tween.is_valid():
 		current_tween.kill()
 	if satellite_tween and satellite_tween.is_valid():
 		satellite_tween.kill()
-	if satellite_fade_tween and satellite_fade_tween.is_valid():  # ✅ NOUVEAU
+	if satellite_fade_tween and satellite_fade_tween.is_valid():
 		satellite_fade_tween.kill()

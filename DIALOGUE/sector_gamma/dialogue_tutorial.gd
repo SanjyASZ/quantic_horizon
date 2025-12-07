@@ -19,10 +19,7 @@ func _process(_delta):
 		
 	if player.flashlight.visible and !wait_lamp:
 		voix.play(paused_position)
-		print("LAMP")
-		print(dialogue.message_id)
 		dialogue.next_message()
-		print(dialogue.message_id)
 		wait_lamp = true
 		tuto_phase_2 = true
 
